@@ -6,13 +6,82 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <ImageView
+        android:id="@+id/imageView_mask"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/Mask" />
+
+    <ImageView
+        android:id="@+id/imageView_path"
+        android:layout_width="6dp"
+        android:layout_height="10dp"
+        android:layout_marginStart="18dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_top_menu"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline_top_menu"
+        app:srcCompat="@drawable/Path" />
+
     <TextView
+        android:id="@+id/textView_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginStart="8dp"
+        android:alpha="0.5"
+        android:fontFamily="@font/roboto"
+        android:gravity="center"
+        android:text="Back"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_top_menu"
+        app:layout_constraintStart_toEndOf="@+id/imageView_path"
+        app:layout_constraintTop_toTopOf="@+id/guideline_top_menu" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_top_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.1" />
+
+    <TextView
+        android:id="@+id/textView_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="Avengers:\n  End Game"
+        android:textColor="@color/name"
+        android:textSize="40sp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView_mask"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView_mask" />
+
+
+    <!--<androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5"/>-->
+
+    <!--<Button
+         android:id="@+id/button"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_marginStart="32dp"
+         android:layout_marginBottom="32dp"
+         android:drawableStart="@drawable/Path"
+         android:drawableLeft="@drawable/Path"
+         android:text="Back"
+         app:layout_constraintBottom_toBottomOf="parent"
+         app:layout_constraintStart_toStartOf="parent" />-->
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
