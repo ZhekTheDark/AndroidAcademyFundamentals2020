@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">AndroidAcademyFundamentals2020</string>
+    <string name="back">Back</string>
+    <string name="movies_poster">Movies poster</string>
+    <string name="pg">pg</string>
+    <string name="_13">13+</string>
+    <string name="avengers_end_game">Avengers:\nEnd Game</string>
+    <string name="action_adventure_fantasy">Action, Adventure, Fantasy</string>
+    <string name="star_on">star on</string>
+    <string name="star_off">star off</string>
 </resources>
