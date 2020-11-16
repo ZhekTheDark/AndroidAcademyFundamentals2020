@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">AndroidAcademyFundamentals2020</string>
+
+    <!--Movie Details-->
     <string name="back">Back</string>
     <string name="movies_poster">Movies poster</string>
     <string name="pg">pg</string>
@@ -20,4 +22,7 @@
     <string name="_2_cast">2 cast</string>
     <string name="_3_cast">3 cast</string>
     <string name="_4_cast">4 cast</string>
+
+    <!--Movies-->
+    <string name="warszawa_poland">Warszawa, Poland</string>
 </resources>
