@@ -13,6 +13,7 @@
     <color name="tag">#FF3466</color>
     <color name="gray">#6D6D80</color>
     <color name="cast">#D8D8D8</color>
+    <color name="star_on">#FF3365</color>
 
     <!--    <color name="gray">#191926</color>-->
 </resources>
