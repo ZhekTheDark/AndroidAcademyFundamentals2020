@@ -24,7 +24,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/mask" />
+            app:srcCompat="@drawable/mask"
+            tools:targetApi="m" />
 
         <TextView
             android:id="@+id/textView_back"
@@ -63,7 +64,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/movie_details_margin"
-            android:layout_marginTop="256dp"
             android:layout_marginEnd="@dimen/movie_details_margin"
             android:fontFamily="@font/roboto_black"
             android:text="@string/avengers_end_game"
@@ -71,7 +71,7 @@
             android:textSize="@dimen/movie_details_name_text_size"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/guideline" />
 
         <TextView
             android:id="@+id/textView_tag"
@@ -164,7 +164,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/movie_details_margin"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="@dimen/movie_details_xx_large_margin"
             android:layout_marginEnd="@dimen/movie_details_margin"
             android:fontFamily="@font/roboto_medium"
             android:text="@string/storyline"
@@ -179,7 +179,7 @@
             android:id="@+id/textView_storyline_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="14dp"
+            android:layout_marginStart="@dimen/movie_details_margin"
             android:layout_marginTop="@dimen/movie_details_xx_small_margin"
             android:layout_marginEnd="@dimen/movie_details_margin"
             android:alpha="0.75"
@@ -195,10 +195,11 @@
 
         <TextView
             android:id="@+id/textView_cast"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/movie_details_margin"
             android:layout_marginTop="@dimen/movie_details_xx_large_margin"
+            android:layout_marginEnd="@dimen/movie_details_margin"
             android:height="@dimen/movie_detail_large_text_size"
             android:fontFamily="@font/roboto_medium"
             android:gravity="center_vertical"
@@ -352,6 +353,13 @@
             app:layout_constraintBottom_toBottomOf="@+id/textView_reviews"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/textView_reviews" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.43"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
