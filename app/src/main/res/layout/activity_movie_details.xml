@@ -15,8 +15,8 @@
 
         <ImageView
             android:id="@+id/imageView_mask"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:contentDescription="@string/movies_poster"
             android:foreground="@drawable/movie_image_gradient"
             android:scaleType="centerCrop"
@@ -69,9 +69,10 @@
             android:text="@string/avengers_end_game"
             android:textColor="@color/heading"
             android:textSize="@dimen/movie_details_name_text_size"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView_mask"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/guideline" />
+            app:layout_constraintTop_toBottomOf="@+id/imageView_mask" />
 
         <TextView
             android:id="@+id/textView_tag"
@@ -88,60 +89,20 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView_name" />
 
-        <ImageView
-            android:id="@+id/imageView_star1"
+        <RatingBar
+            android:id="@+id/ratingBar"
+            style="@style/MyRatingBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:contentDescription="@string/star_on"
-            app:layout_constraintBottom_toBottomOf="@+id/textView_pg"
-            app:layout_constraintStart_toEndOf="@+id/textView_pg"
-            app:layout_constraintTop_toTopOf="@+id/textView_pg"
-            app:srcCompat="@drawable/star_icon_on" />
-
-        <ImageView
-            android:id="@+id/imageView_star2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/movie_details_xx_small_margin"
-            android:contentDescription="@string/star_on"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView_star1"
-            app:layout_constraintStart_toEndOf="@+id/imageView_star1"
-            app:layout_constraintTop_toTopOf="@+id/imageView_star1"
-            app:srcCompat="@drawable/star_icon_on" />
-
-        <ImageView
-            android:id="@+id/imageView_star3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/movie_details_xx_small_margin"
-            android:contentDescription="@string/star_on"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView_star1"
-            app:layout_constraintStart_toEndOf="@+id/imageView_star2"
-            app:layout_constraintTop_toTopOf="@+id/imageView_star1"
-            app:srcCompat="@drawable/star_icon_on" />
-
-        <ImageView
-            android:id="@+id/imageView_star4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/movie_details_xx_small_margin"
-            android:contentDescription="@string/star_on"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView_star1"
-            app:layout_constraintStart_toEndOf="@+id/imageView_star3"
-            app:layout_constraintTop_toTopOf="@+id/imageView_star1"
-            app:srcCompat="@drawable/star_icon_on" />
-
-        <ImageView
-            android:id="@+id/imageView_star5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/movie_details_xx_small_margin"
-            android:contentDescription="@string/star_off"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView_star1"
-            app:layout_constraintStart_toEndOf="@+id/imageView_star4"
-            app:layout_constraintTop_toTopOf="@+id/imageView_star1"
-            app:srcCompat="@drawable/star_icon_off" />
+            android:isIndicator="true"
+            android:numStars="5"
+            android:progressBackgroundTint="@color/white"
+            android:progressTint="@color/star_on"
+            android:rating="4"
+            app:layout_constraintBottom_toBottomOf="@+id/textView_reviews"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textView_reviews" />
 
         <TextView
             android:id="@+id/textView_reviews"
@@ -338,28 +299,6 @@
             app:layout_constraintTop_toBottomOf="@+id/imageView_cast4"
             app:layout_constraintVertical_bias="0.0"
             app:lineHeight="@dimen/movie_details_small_line_height" />
-
-        <RatingBar
-            android:id="@+id/ratingBar"
-            style="@style/Widget.AppCompat.RatingBar.Small"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:isIndicator="true"
-            android:numStars="5"
-            android:progressBackgroundTint="@color/white"
-            android:progressTint="@color/star_on"
-            android:rating="4"
-            app:layout_constraintBottom_toBottomOf="@+id/textView_reviews"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textView_reviews" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.43"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

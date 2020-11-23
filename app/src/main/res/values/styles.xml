@@ -6,20 +6,14 @@
         <item name="colorPrimary">@color/colorPrimary</item>
 <!--        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
 <!--        <item name="colorAccent">@color/colorAccent</item>-->
-
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-
     </style>
 
-    <style name="RatingBarSmall" parent="Theme.AppCompat">
-        <item name="android:progressDrawable">@drawable/abc_ratingbar_small_material</item>
-        <item name="android:indeterminateDrawable">@drawable/abc_ratingbar_small_material</item>
-        <item name="android:minHeight">16dp</item>
-        <item name="android:maxHeight">16dp</item>
-        <item name="android:isIndicator">true</item>
-        <item name="android:thumb">@null</item>
+    <style name="MyRatingBar" parent="android:style/Widget.Material.RatingBar.Small">
         <item name="colorControlNormal">@color/white</item>
         <item name="colorControlActivated">@color/star_on</item>
+        <item name="android:height">160dp</item>
+        <item name="android:width">16dp</item>
     </style>
 </resources>
