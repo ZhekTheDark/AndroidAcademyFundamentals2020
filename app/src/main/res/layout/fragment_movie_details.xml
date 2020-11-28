@@ -7,7 +7,7 @@
     android:background="@color/colorPrimary"
     android:clipToPadding="false"
     android:fillViewport="true"
-    tools:context=".MovieDetailsActivity">
+    tools:context=".MovieDetailsFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
