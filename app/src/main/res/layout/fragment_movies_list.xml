@@ -67,8 +67,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0"
                 app:shapeAppearanceOverlay="@style/roundedImageView"
-                app:srcCompat="@drawable/movie"
-                tools:targetApi="m" />
+                app:srcCompat="@drawable/movie" />
 
             <TextView
                 android:id="@+id/tv_pg"
