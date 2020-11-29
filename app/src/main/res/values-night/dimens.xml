@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--Movie Details-->
     <dimen name="movie_details_small_text_size">12sp</dimen>
     <dimen name="movie_details_name_text_size">40sp</dimen>
     <dimen name="movie_details_text_size">14sp</dimen>
@@ -17,8 +18,27 @@
 
     <dimen name="movie_details_line_height">20sp</dimen>
     <dimen name="movie_details_large_line_height">24sp</dimen>
-    <dimen name="movie_details_small_line_height">16dp</dimen>
+    <dimen name="movie_details_small_line_height">16sp</dimen>
+
+    <!--Movies-->
+    <dimen name="movies_small_text_size">12sp</dimen>
     <dimen name="movies_text_size">14sp</dimen>
-    <dimen name="movies_location_top_margin">44dp</dimen>
-    <dimen name="movie_margin">16dp</dimen>
+
+    <dimen name="movies_small_padding">3dp</dimen>
+    <dimen name="movies_padding">8dp</dimen>
+
+    <dimen name="movies_xx_small_margin">2dp</dimen>
+    <dimen name="movies_x_small_margin">6dp</dimen>
+    <dimen name="movies_small_margin">8dp</dimen>
+    <dimen name="movies_margin">16dp</dimen>
+    <dimen name="movies_large_margin">12dp</dimen>
+    <dimen name="movies_avengers_top_margin">27dp</dimen>
+    <dimen name="movies_location_top_margin">55dp</dimen>
+
+    <dimen name="movies_small_line_height">12sp</dimen>
+    <dimen name="movies_line_height">20sp</dimen>
+
+    <dimen name="movies_star_width">12dp</dimen>
+    <dimen name="movies_star_height">12dp</dimen>
+
 </resources>

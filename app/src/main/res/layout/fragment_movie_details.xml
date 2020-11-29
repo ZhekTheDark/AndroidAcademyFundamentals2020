@@ -45,7 +45,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textView_pg"
+            android:id="@+id/tv_pg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/movie_details_small_margin"
@@ -75,7 +75,7 @@
             app:layout_constraintTop_toBottomOf="@+id/imageView_mask" />
 
         <TextView
-            android:id="@+id/textView_tag"
+            android:id="@+id/tv_tag"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/movie_details_margin"
@@ -100,12 +100,12 @@
             android:progressBackgroundTint="@color/white"
             android:progressTint="@color/star_on"
             android:rating="4"
-            app:layout_constraintBottom_toBottomOf="@+id/textView_reviews"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_reviews"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textView_reviews" />
+            app:layout_constraintTop_toTopOf="@+id/tv_reviews" />
 
         <TextView
-            android:id="@+id/textView_reviews"
+            android:id="@+id/tv_reviews"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -118,7 +118,7 @@
             android:textSize="@dimen/movie_details_text_size"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/ratingBar"
-            app:layout_constraintTop_toBottomOf="@+id/textView_tag" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_tag" />
 
         <TextView
             android:id="@+id/textView_storyline"
@@ -134,7 +134,7 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView_reviews" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_reviews" />
 
         <TextView
             android:id="@+id/textView_storyline_text"
