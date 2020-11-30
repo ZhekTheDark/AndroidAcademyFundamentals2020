@@ -25,11 +25,18 @@ class MoviesListFragment : Fragment() {
                 activity?.supportFragmentManager?.apply {
                     beginTransaction().addToBackStack(null).replace(
                         R.id.fragments_container,
-                        MovieDetailsFragment(),
+                        MovieDetailsFragment.newInstance(),
                         MainActivity.MOVIE_DETAILS_FRAGMENT_FLAG
                     )
                         .commit()
                 }
             }
+    }
+
+    companion object {
+        fun newInstance(): MoviesListFragment {
+            val fragment = MoviesListFragment()
+            return fragment
+        }
     }
 }

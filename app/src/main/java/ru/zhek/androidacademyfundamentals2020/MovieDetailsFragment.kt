@@ -15,4 +15,11 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
                 activity?.supportFragmentManager?.popBackStack()
             }
     }
+
+    companion object {
+        fun newInstance(): MovieDetailsFragment {
+            val fragment = MovieDetailsFragment()
+            return fragment
+        }
+    }
 }
