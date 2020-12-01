@@ -15,5 +15,7 @@
     <color name="cast">#D8D8D8</color>
     <color name="star_on">#FF3365</color>
 
+    <color name="duration">#565665</color>
+
     <!--    <color name="gray">#191926</color>-->
 </resources>

@@ -1,24 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="movie_details_small_text_size">12sp</dimen>
-    <dimen name="movie_details_name_text_size">40sp</dimen>
-    <dimen name="movie_details_text_size">14sp</dimen>
-    <dimen name="movie_detail_large_text_size">24sp</dimen>
 
-    <dimen name="movie_details_padding">8dp</dimen>
-
-    <dimen name="movie_details_small_margin">8dp</dimen>
-    <dimen name="movie_details_x_large_margin">18dp</dimen>
-    <dimen name="movie_details_back_vertical_margin">80dp</dimen>
-    <dimen name="movie_details_margin">16dp</dimen>
-    <dimen name="movie_details_xx_small_margin">4dp</dimen>
-    <dimen name="movie_details_xx_large_margin">24dp</dimen>
-    <dimen name="movie_details_x_small_margin">6dp</dimen>
-
-    <dimen name="movie_details_line_height">20sp</dimen>
-    <dimen name="movie_details_large_line_height">24sp</dimen>
-    <dimen name="movie_details_small_line_height">16dp</dimen>
-    <dimen name="movies_text_size">14sp</dimen>
-    <dimen name="movies_location_top_margin">44dp</dimen>
-    <dimen name="movie_margin">16dp</dimen>
 </resources>
