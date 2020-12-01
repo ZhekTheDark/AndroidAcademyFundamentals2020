@@ -15,14 +15,9 @@ class MainActivity : AppCompatActivity() {
                 .replace(
                     R.id.fragments_container,
                     MoviesListFragment.newInstance(),
-                    MOVIES_LIST_FRAGMENT_FLAG
+                    MoviesListFragment.MOVIES_LIST_FRAGMENT_FLAG
                 )
                 .commit()
         }
-    }
-
-    companion object {
-        const val MOVIES_LIST_FRAGMENT_FLAG = "moviesListFragment"
-        const val MOVIE_DETAILS_FRAGMENT_FLAG = "movieDetailsFragment"
     }
 }
