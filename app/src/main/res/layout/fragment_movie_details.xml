@@ -14,18 +14,16 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/iv_mask"
-            android:layout_width="match_parent"
+            android:id="@+id/iv_backposter"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:contentDescription="@string/movies_poster"
             android:foreground="@drawable/movie_image_gradient"
             android:scaleType="centerCrop"
-            app:layout_constraintDimensionRatio="w,1:1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/mask"
-            tools:targetApi="m" />
+            tools:srcCompat="@drawable/mask" />
 
         <TextView
             android:id="@+id/tv_back"
@@ -53,11 +51,11 @@
             android:background="@drawable/ic_thirteen_rectangle"
             android:fontFamily="@font/roboto_black"
             android:gravity="center"
-            android:text="@string/_13"
             android:textColor="@color/white"
             android:textSize="@dimen/movie_details_small_text_size"
             app:layout_constraintBottom_toTopOf="@+id/tv_name"
-            app:layout_constraintStart_toStartOf="@+id/tv_name" />
+            app:layout_constraintStart_toStartOf="@+id/tv_name"
+            tools:text="@string/_13" />
 
         <TextView
             android:id="@+id/tv_name"
@@ -66,13 +64,13 @@
             android:layout_marginStart="@dimen/movie_details_margin"
             android:layout_marginEnd="@dimen/movie_details_margin"
             android:fontFamily="@font/roboto_black"
-            android:text="@string/avengers_end_game"
             android:textColor="@color/heading"
             android:textSize="@dimen/movie_details_name_text_size"
-            app:layout_constraintBottom_toBottomOf="@+id/iv_mask"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_backposter"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/iv_mask" />
+            app:layout_constraintTop_toBottomOf="@+id/iv_backposter"
+            tools:text="@string/avengers_end_game" />
 
         <TextView
             android:id="@+id/tv_genres"
@@ -82,13 +80,14 @@
             android:layout_marginTop="@dimen/movie_details_xx_small_margin"
             android:layout_marginEnd="@dimen/movie_details_margin"
             android:fontFamily="@font/roboto_light"
-            android:text="@string/action_adventure_fantasy"
             android:textColor="@color/tag"
             android:textSize="@dimen/movie_details_text_size"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_name" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_name"
+            tools:text="@string/action_adventure_fantasy" />
 
+        <!--        TODO-->
         <RatingBar
             android:id="@+id/ratingBar"
             style="@style/MyRatingBar"
@@ -99,11 +98,12 @@
             android:numStars="5"
             android:progressBackgroundTint="@color/white"
             android:progressTint="@color/star_on"
-            android:rating="4"
             app:layout_constraintBottom_toBottomOf="@+id/tv_reviews"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/tv_reviews" />
+            app:layout_constraintTop_toTopOf="@+id/tv_reviews"
+            tools:rating="4" />
 
+        <!--        TODO-->
         <TextView
             android:id="@+id/tv_reviews"
             android:layout_width="0dp"
@@ -138,6 +138,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_reviews" />
 
+        <!--        TODO-->
         <TextView
             android:id="@+id/tv_storyline_text"
             android:layout_width="0dp"
@@ -149,12 +150,12 @@
             android:fontFamily="@font/roboto_light"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
-            android:text="@string/movie_details_storyline"
             android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_storyline"
-            app:lineHeight="@dimen/movie_details_line_height" />
+            app:lineHeight="@dimen/movie_details_line_height"
+            tools:text="@string/movie_details_storyline" />
 
         <TextView
             android:id="@+id/tv_cast"
