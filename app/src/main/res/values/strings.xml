@@ -1,34 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--TODO-->
 <resources>
     <string name="app_name">AndroidAcademyFundamentals2020</string>
 
     <!--Movie Details-->
     <string name="back">Back</string>
     <string name="movies_poster">Movies poster</string>
-    <string name="pg">pg</string>
-    <string name="_13">13+</string>
-    <string name="avengers_end_game">Avengers:\nEnd Game</string>
-    <string name="action_adventure_fantasy">Action, Adventure, Fantasy</string>
-    <string name="star_on">star on</string>
-    <string name="star_off">star off</string>
-    <string name="_125_reviews">125 Reviews</string>
-    <string name="movie_details_storyline">After the devastating events of Avengers: Infinity War, the universe is in ruins. With the help of remaining allies, the Avengers assemble once more in order to reverse Thano\'s actions and restore balance to the universe.</string>
+    <string name="pg">%1$d+</string>
     <string name="cast">Cast</string>
     <string name="storyline">Storyline</string>
-    <string name="robert_downey_jr">Robert Downey Jr.</string>
-    <string name="chris_evans">Chris Evans</string>
-    <string name="mark_ruffalo">Mark Ruffalo</string>
-    <string name="chris_hemsworth">Chris Hemsworth</string>
-    <string name="_1_cast">1 cast</string>
-    <string name="_2_cast">2 cast</string>
-    <string name="_3_cast">3 cast</string>
-    <string name="_4_cast">4 cast</string>
-
+    
     <!--Movies-->
     <string name="movies_list">Movies list</string>
-    <string name="movies_avengers_end_game">Avengers: End Game</string>
-    <string name="_137_min">137 min</string>
-    <string name="action_adventure_drama">Action, Adventure, Drama</string>
     <string name="like">Like</string>
+    <string name="kinoposter">Kinoposter</string>
+    <string name="reviews">%1$d reviews</string>
 </resources>

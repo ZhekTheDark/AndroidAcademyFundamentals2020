@@ -6,20 +6,19 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/movie_bg"
-    tools:context=".MoviesListFragment">
+    tools:context=".moviesList.MoviesListFragment">
 
-    <!--    TODO-->
-    <!--    <com.google.android.material.imageview.ShapeableImageView-->
     <ImageView
-        android:id="@+id/iv_movie"
+        android:id="@+id/iv_kinoposter"
         android:layout_width="0dp"
-        android:layout_height="248dp"
+        android:layout_height="@dimen/movies_kinoposter_height"
         android:layout_marginStart="@dimen/movies_xx_small_margin"
-        android:scaleType="centerCrop"
         android:layout_marginTop="@dimen/movies_xx_small_margin"
         android:layout_marginEnd="@dimen/movies_xx_small_margin"
+        android:contentDescription="@string/kinoposter"
         android:foreground="@drawable/movie_image_gradient"
         android:outlineProvider="background"
+        android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -39,20 +38,20 @@
         android:gravity="center"
         android:textColor="@color/white"
         android:textSize="@dimen/movie_details_small_text_size"
-        app:layout_constraintStart_toStartOf="@+id/iv_movie"
-        app:layout_constraintTop_toTopOf="@+id/iv_movie"
-        tools:text="@string/_13" />
+        app:layout_constraintStart_toStartOf="@+id/iv_kinoposter"
+        app:layout_constraintTop_toTopOf="@+id/iv_kinoposter"
+        tools:text="13+" />
 
     <ImageView
         android:id="@+id/iv_like"
-        android:layout_width="16dp"
-        android:layout_height="14dp"
+        android:layout_width="@dimen/like_width"
+        android:layout_height="@dimen/like_height"
         android:layout_marginTop="@dimen/movies_large_margin"
         android:layout_marginEnd="@dimen/movies_x_small_margin"
         android:contentDescription="@string/like"
-        app:layout_constraintEnd_toEndOf="@+id/iv_movie"
-        app:layout_constraintTop_toTopOf="@+id/iv_movie"
-        tools:srcCompat="@drawable/ic_like" />
+        app:layout_constraintEnd_toEndOf="@+id/iv_kinoposter"
+        app:layout_constraintTop_toTopOf="@+id/iv_kinoposter"
+        tools:srcCompat="@drawable/like" />
 
     <TextView
         android:id="@+id/tv_genres"
@@ -69,7 +68,7 @@
         app:layout_constraintBottom_toTopOf="@+id/tv_reviews"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:text="@string/action_adventure_drama" />
+        tools:text="Action, Adventure, Drama" />
 
     <ru.zhek.androidacademyfundamentals2020.ui.custom.RatingBar
         android:id="@+id/ratingBar"
@@ -100,10 +99,10 @@
         android:textAllCaps="true"
         android:textColor="@color/gray"
         android:textSize="@dimen/movies_small_text_size"
-        app:layout_constraintBottom_toBottomOf="@+id/iv_movie"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_kinoposter"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/ratingBar"
-        tools:text="@string/_125_reviews" />
+        tools:text="125 Reviews" />
 
     <TextView
         android:id="@+id/tv_name"
@@ -119,7 +118,7 @@
         android:textSize="@dimen/movies_text_size"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iv_movie"
+        app:layout_constraintTop_toBottomOf="@+id/iv_kinoposter"
         tools:text="Avengers: End Game" />
 
     <TextView
@@ -140,6 +139,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_name"
-        tools:text="@string/_137_min" />
+        tools:text="137 min" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
