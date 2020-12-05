@@ -23,7 +23,6 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
     override fun onStart() {
         super.onStart()
 
-// TODO: 04.12.2020 mne ne och nravirsya, mb peredat' parametr i bydet ok?
         updateActorsData()
     }
 
@@ -51,20 +50,18 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
         actorsRecycler?.addItemDecoration(horizontalDecorator)
 
         movieId = arguments?.getInt(MOVIE_ID_FLAG) ?: 1
-        val movie = movies.find { it.id == movieId }
+        val movie = movies.find { it.id == movieId }!!
 
         Glide.with(view.context)
-            .load(movie?.backposter)
+            .load(movie.backposter)
             .centerInside()
             .into(backposter)
-        pg.text = getString(R.string.pg, movie?.pg)
-        name.text = movie?.name
-        genres.text = movie?.genres
-        ratingBar.rating = movie?.rating?.toFloat() ?: 0f
-        reviews.text = getString(R.string.reviews, movie?.reviews)
-        storyline.text = movie?.storyline
-        actorsRecycler
-
+        pg.text = getString(R.string.pg, movie.pg)
+        name.text = movie.name
+        genres.text = movie.genres
+        ratingBar.rating = movie.rating.toFloat()
+        reviews.text = resources.getQuantityString(R.plurals.reviews, movie.reviews, movie.reviews)
+        storyline.text = movie.storyline
         view.findViewById<TextView>(R.id.tv_back)
             .setOnClickListener {
                 activity?.supportFragmentManager?.popBackStack()

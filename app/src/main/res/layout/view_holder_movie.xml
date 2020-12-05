@@ -8,7 +8,7 @@
     android:background="@drawable/movie_bg"
     tools:context=".moviesList.MoviesListFragment">
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/iv_kinoposter"
         android:layout_width="0dp"
         android:layout_height="@dimen/movies_kinoposter_height"

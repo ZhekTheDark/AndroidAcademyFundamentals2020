@@ -13,5 +13,10 @@
     <string name="movies_list">Movies list</string>
     <string name="like">Like</string>
     <string name="kinoposter">Kinoposter</string>
-    <string name="reviews">%1$d reviews</string>
+    <plurals name="reviews">
+        <item quantity="zero">%d review</item>
+        <item quantity="one">%d review</item>
+        <item quantity="other">%d reviews</item>
+    </plurals>
+    <string name="duration">%1$d min</string>
 </resources>

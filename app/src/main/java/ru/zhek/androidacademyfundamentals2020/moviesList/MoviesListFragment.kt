@@ -46,7 +46,6 @@ class MoviesListFragment : Fragment(R.layout.fragment_movies_list) {
         moviesRecycler?.addItemDecoration(horizontalDecorator)
     }
 
-    //    TODO duplicated in fragments, nope?
     private fun updateMoviesData() {
         (moviesRecycler?.adapter as? MoviesAdapter)?.apply {
             bindMovies(MoviesDataSource().getFilms())
@@ -57,6 +56,12 @@ class MoviesListFragment : Fragment(R.layout.fragment_movies_list) {
         override fun onClick(movie: Movie) {
             activity?.supportFragmentManager?.apply {
                 beginTransaction()
+                    .setCustomAnimations(
+                        R.anim.slide_in_right,
+                        R.anim.slide_out_left,
+                        R.anim.slide_in_left,
+                        R.anim.slide_out_right
+                    )
                     .addToBackStack(null)
                     .replace(
                         R.id.fragments_container,

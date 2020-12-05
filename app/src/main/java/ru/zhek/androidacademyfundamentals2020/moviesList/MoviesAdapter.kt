@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.widget.ImageViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.android.material.imageview.ShapeableImageView
 import ru.zhek.androidacademyfundamentals2020.R
 import ru.zhek.androidacademyfundamentals2020.data.models.Movie
 import ru.zhek.androidacademyfundamentals2020.ui.custom.RatingBar
@@ -24,7 +25,7 @@ class MoviesAdapter(
     class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         private val name = itemView.findViewById<TextView>(R.id.tv_name)
-        private val kinoposter = itemView.findViewById<ImageView>(R.id.iv_kinoposter)
+        private val kinoposter = itemView.findViewById<ShapeableImageView>(R.id.iv_kinoposter)
         private val pg = itemView.findViewById<TextView>(R.id.tv_pg)
         private val genres = itemView.findViewById<TextView>(R.id.tv_genres)
         private val rating = itemView.findViewById<RatingBar>(R.id.ratingBar)
@@ -37,13 +38,11 @@ class MoviesAdapter(
             Glide.with(this.itemView.context)
                 .load(movie.kinoposter)
                 .into(kinoposter)
-//            TODO
-            pg.text = "${movie.pg}+"
+            pg.text = this.itemView.context.getString(R.string.pg, movie.pg)
             genres.text = movie.genres
             rating.rating = movie.rating.toFloat()
-            reviews.text = "${movie.reviews} reviews"
-            duration.text = "${movie.duration} min"
-
+            reviews.text = this.itemView.context.resources.getQuantityString(R.plurals.reviews, movie.reviews, movie.reviews)
+            duration.text = this.itemView.context.getString(R.string.duration, movie.duration)
             Glide.with(this.itemView.context)
                 .load(R.drawable.like)
                 .into(like)
