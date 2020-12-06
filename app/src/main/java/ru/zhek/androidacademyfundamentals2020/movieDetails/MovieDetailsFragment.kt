@@ -2,23 +2,77 @@ package ru.zhek.androidacademyfundamentals2020.movieDetails
 
 import android.os.Bundle
 import android.view.View
-import android.widget.ImageView
-import android.widget.RatingBar
-import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import ru.zhek.androidacademyfundamentals2020.R
 import ru.zhek.androidacademyfundamentals2020.data.models.Movie
+import ru.zhek.androidacademyfundamentals2020.databinding.FragmentMovieDetailsBinding
 import ru.zhek.androidacademyfundamentals2020.domain.MoviesDataSource
+
+const val DEFAULT_MOVIE_ID: Int = 1
 
 class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
 
-    private var movies: List<Movie> = MoviesDataSource().getFilms()
-    private var actorsRecycler: RecyclerView? = null
-    private var movieId: Int = arguments?.getInt(MOVIE_ID_FLAG) ?: 1
+    private var fragmentMovieDetailsBinding: FragmentMovieDetailsBinding? = null
+    private var movieId: Int = arguments?.getInt(MOVIE_ID_FLAG) ?: DEFAULT_MOVIE_ID
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val binding = FragmentMovieDetailsBinding.bind(view)
+        fragmentMovieDetailsBinding = binding
+
+        initListComponent(binding)
+
+        val movie = obtainMovie()
+
+        fillViews(view, movie, binding)
+
+        binding.tvBack.setOnClickListener {
+            activity?.supportFragmentManager?.popBackStack()
+        }
+    }
+
+    private fun initListComponent(binding: FragmentMovieDetailsBinding) {
+        binding.rvActors.adapter = ActorAdapter()
+
+        val horizontalDecorator =
+            DividerItemDecoration(context, DividerItemDecoration.HORIZONTAL).apply {
+                this.setDrawable(
+                    ContextCompat.getDrawable(
+                        requireContext(),
+                        R.drawable.divider
+                    )!!
+                )
+            }
+        binding.rvActors.addItemDecoration(horizontalDecorator)
+    }
+
+    private fun obtainMovie(): Movie? {
+        movieId = arguments?.getInt(MOVIE_ID_FLAG) ?: 1
+        return MoviesDataSource().getFilms().find { it.id == movieId }
+    }
+
+    private fun fillViews(
+        view: View,
+        movie: Movie?,
+        binding: FragmentMovieDetailsBinding
+    ) {
+        if (movie != null) {
+            Glide.with(view.context)
+                .load(movie.backposter)
+                .centerInside()
+                .into(binding.ivBackposter)
+            binding.tvPg.text = getString(R.string.pg, movie.pg)
+            binding.tvName.text = movie.name
+            binding.tvGenres.text = movie.genres
+            binding.ratingBar.rating = movie.rating.toFloat()
+            binding.tvReviews.text =
+                resources.getQuantityString(R.plurals.reviews, movie.reviews, movie.reviews)
+            binding.tvStorylineText.text = movie.storyline
+        }
+    }
 
     override fun onStart() {
         super.onStart()
@@ -26,50 +80,8 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
         updateActorsData()
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        val backposter = view.findViewById<ImageView>(R.id.iv_backposter)
-        val pg = view.findViewById<TextView>(R.id.tv_pg)
-        val name = view.findViewById<TextView>(R.id.tv_name)
-        val genres = view.findViewById<TextView>(R.id.tv_genres)
-        val ratingBar = view.findViewById<RatingBar>(R.id.ratingBar)
-        val reviews = view.findViewById<TextView>(R.id.tv_reviews)
-        val storyline = view.findViewById<TextView>(R.id.tv_storyline_text)
-        actorsRecycler = view.findViewById(R.id.rv_actors)
-        actorsRecycler?.adapter = ActorAdapter()
-
-        val horizontalDecorator =
-            DividerItemDecoration(this.context, DividerItemDecoration.HORIZONTAL)
-        horizontalDecorator.setDrawable(
-            ContextCompat.getDrawable(
-                this.context!!,
-                R.drawable.divider
-            )!!
-        )
-        actorsRecycler?.addItemDecoration(horizontalDecorator)
-
-        movieId = arguments?.getInt(MOVIE_ID_FLAG) ?: 1
-        val movie = movies.find { it.id == movieId }!!
-
-        Glide.with(view.context)
-            .load(movie.backposter)
-            .centerInside()
-            .into(backposter)
-        pg.text = getString(R.string.pg, movie.pg)
-        name.text = movie.name
-        genres.text = movie.genres
-        ratingBar.rating = movie.rating.toFloat()
-        reviews.text = resources.getQuantityString(R.plurals.reviews, movie.reviews, movie.reviews)
-        storyline.text = movie.storyline
-        view.findViewById<TextView>(R.id.tv_back)
-            .setOnClickListener {
-                activity?.supportFragmentManager?.popBackStack()
-            }
-    }
-
     private fun updateActorsData() {
-        (actorsRecycler?.adapter as? ActorAdapter)?.apply {
+        (fragmentMovieDetailsBinding?.rvActors?.adapter as? ActorAdapter)?.apply {
             bindActors(
                 MoviesDataSource().getFilms()
                     .find { it.id == movieId }!!
@@ -77,6 +89,11 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
                     .shuffled()
             )
         }
+    }
+
+    override fun onDestroyView() {
+        fragmentMovieDetailsBinding = null
+        super.onDestroyView()
     }
 
     companion object {
