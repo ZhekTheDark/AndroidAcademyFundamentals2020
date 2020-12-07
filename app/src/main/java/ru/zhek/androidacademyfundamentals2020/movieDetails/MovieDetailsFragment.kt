@@ -7,9 +7,9 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.bumptech.glide.Glide
 import ru.zhek.androidacademyfundamentals2020.R
+import ru.zhek.androidacademyfundamentals2020.data.MoviesDataSource
 import ru.zhek.androidacademyfundamentals2020.data.models.Movie
 import ru.zhek.androidacademyfundamentals2020.databinding.FragmentMovieDetailsBinding
-import ru.zhek.androidacademyfundamentals2020.domain.MoviesDataSource
 
 const val DEFAULT_MOVIE_ID: Int = 1
 
@@ -20,12 +20,12 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val binding = FragmentMovieDetailsBinding.bind(view)
+        val binding: FragmentMovieDetailsBinding = FragmentMovieDetailsBinding.bind(view)
         fragmentMovieDetailsBinding = binding
 
         initListComponent(binding)
 
-        val movie = obtainMovie()
+        val movie: Movie? = obtainMovie()
 
         fillViews(view, movie, binding)
 
@@ -35,7 +35,12 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
     }
 
     private fun initListComponent(binding: FragmentMovieDetailsBinding) {
-        binding.rvActors.adapter = ActorAdapter()
+        binding.rvActors.adapter = ActorAdapter(
+            MoviesDataSource().getFilms()
+                .find { it.id == movieId }!!
+                .castList
+                .shuffled()
+        )
 
         val horizontalDecorator =
             DividerItemDecoration(context, DividerItemDecoration.HORIZONTAL).apply {
@@ -50,7 +55,7 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
     }
 
     private fun obtainMovie(): Movie? {
-        movieId = arguments?.getInt(MOVIE_ID_FLAG) ?: 1
+        movieId = arguments?.getInt(MOVIE_ID_FLAG) ?: DEFAULT_MOVIE_ID
         return MoviesDataSource().getFilms().find { it.id == movieId }
     }
 
@@ -71,23 +76,6 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
             binding.tvReviews.text =
                 resources.getQuantityString(R.plurals.reviews, movie.reviews, movie.reviews)
             binding.tvStorylineText.text = movie.storyline
-        }
-    }
-
-    override fun onStart() {
-        super.onStart()
-
-        updateActorsData()
-    }
-
-    private fun updateActorsData() {
-        (fragmentMovieDetailsBinding?.rvActors?.adapter as? ActorAdapter)?.apply {
-            bindActors(
-                MoviesDataSource().getFilms()
-                    .find { it.id == movieId }!!
-                    .castList
-                    .shuffled()
-            )
         }
     }
 

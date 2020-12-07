@@ -5,54 +5,47 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
 import androidx.core.widget.ImageViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.google.android.material.imageview.ShapeableImageView
 import ru.zhek.androidacademyfundamentals2020.R
 import ru.zhek.androidacademyfundamentals2020.data.models.Movie
-import ru.zhek.androidacademyfundamentals2020.ui.custom.RatingBar
+import ru.zhek.androidacademyfundamentals2020.databinding.ViewHolderMovieBinding
 
 class MoviesAdapter(
+    private val movies: List<Movie>,
     private val onClickListener: OnRecyclerItemClicked
 ) : RecyclerView.Adapter<MoviesAdapter.MovieViewHolder>() {
 
-    private var movies = listOf<Movie>()
-
     class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        private val name = itemView.findViewById<TextView>(R.id.tv_name)
-        private val kinoposter = itemView.findViewById<ShapeableImageView>(R.id.iv_kinoposter)
-        private val pg = itemView.findViewById<TextView>(R.id.tv_pg)
-        private val genres = itemView.findViewById<TextView>(R.id.tv_genres)
-        private val rating = itemView.findViewById<RatingBar>(R.id.ratingBar)
-        private val reviews = itemView.findViewById<TextView>(R.id.tv_reviews)
-        private val duration = itemView.findViewById<TextView>(R.id.tv_duration)
-        private val like = itemView.findViewById<ImageView>(R.id.iv_like)
+        private val binding = ViewHolderMovieBinding.bind(itemView)
 
         fun bind(movie: Movie) {
-            name.text = movie.name
+            binding.tvName.text = movie.name
             Glide.with(this.itemView.context)
                 .load(movie.kinoposter)
-                .into(kinoposter)
-            pg.text = this.itemView.context.getString(R.string.pg, movie.pg)
-            genres.text = movie.genres
-            rating.rating = movie.rating.toFloat()
-            reviews.text = this.itemView.context.resources.getQuantityString(R.plurals.reviews, movie.reviews, movie.reviews)
-            duration.text = this.itemView.context.getString(R.string.duration, movie.duration)
+                .into(binding.ivKinoposter)
+            binding.tvPg.text = this.itemView.context.getString(R.string.pg, movie.pg)
+            binding.tvGenres.text = movie.genres
+            binding.ratingBar.rating = movie.rating.toFloat()
+            binding.tvReviews.text = this.itemView.context.resources.getQuantityString(
+                R.plurals.reviews,
+                movie.reviews,
+                movie.reviews
+            )
+            binding.tvDuration.text =
+                this.itemView.context.getString(R.string.duration, movie.duration)
             Glide.with(this.itemView.context)
                 .load(R.drawable.like)
-                .into(like)
+                .into(binding.ivLike)
             if (movie.liked) {
-                like.setTint(R.color.tag)
+                binding.ivLike.setTint(R.color.tag)
             } else {
-                like.setTint(R.color.white)
+                binding.ivLike.setTint(R.color.white)
             }
-
-            itemView.setOnClickListener { this.layoutPosition }
         }
     }
 
@@ -73,14 +66,9 @@ class MoviesAdapter(
         return movies.size
     }
 
-    fun bindMovies(newMovies: List<Movie>) {
-        movies = newMovies
-        notifyDataSetChanged()
+    class OnRecyclerItemClicked(val clickListener: (movie: Movie) -> Unit) {
+        fun onClick(movie: Movie) = clickListener(movie)
     }
-}
-
-interface OnRecyclerItemClicked {
-    fun onClick(movie: Movie)
 }
 
 fun ImageView.setTint(@ColorRes colorRes: Int) {

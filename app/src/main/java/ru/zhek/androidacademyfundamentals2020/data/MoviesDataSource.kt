@@ -1,4 +1,4 @@
-package ru.zhek.androidacademyfundamentals2020.domain
+package ru.zhek.androidacademyfundamentals2020.data
 
 import ru.zhek.androidacademyfundamentals2020.R
 import ru.zhek.androidacademyfundamentals2020.data.models.Actor
