@@ -15,43 +15,45 @@ const val DEFAULT_MOVIE_ID: Int = 1
 
 class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
 
-    private var fragmentMovieDetailsBinding: FragmentMovieDetailsBinding? = null
+    private var _binding: FragmentMovieDetailsBinding? = null
+    private val binding get() = _binding!!
     private var movieId: Int = arguments?.getInt(MOVIE_ID_FLAG) ?: DEFAULT_MOVIE_ID
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val binding: FragmentMovieDetailsBinding = FragmentMovieDetailsBinding.bind(view)
-        fragmentMovieDetailsBinding = binding
+        _binding = FragmentMovieDetailsBinding.bind(view)
 
-        initListComponent(binding)
+        initListComponent()
 
         val movie: Movie? = obtainMovie()
 
-        fillViews(view, movie, binding)
+        fillViews(movie)
 
         binding.tvBack.setOnClickListener {
             activity?.supportFragmentManager?.popBackStack()
         }
     }
 
-    private fun initListComponent(binding: FragmentMovieDetailsBinding) {
-        binding.rvActors.adapter = ActorAdapter(
-            MoviesDataSource().getFilms()
-                .find { it.id == movieId }!!
-                .castList
-                .shuffled()
-        )
+    private fun initListComponent() {
+        binding.rvActors.apply {
+            adapter = ActorAdapter(
+                MoviesDataSource().getFilms()
+                    .find { it.id == movieId }!!
+                    .castList
+                    .shuffled()
+            )
 
-        val horizontalDecorator =
-            DividerItemDecoration(context, DividerItemDecoration.HORIZONTAL).apply {
-                this.setDrawable(
-                    ContextCompat.getDrawable(
-                        requireContext(),
-                        R.drawable.divider
-                    )!!
-                )
-            }
-        binding.rvActors.addItemDecoration(horizontalDecorator)
+            val horizontalDecorator =
+                DividerItemDecoration(context, DividerItemDecoration.HORIZONTAL).apply {
+                    this.setDrawable(
+                        ContextCompat.getDrawable(
+                            requireContext(),
+                            R.drawable.divider
+                        )!!
+                    )
+                }
+            addItemDecoration(horizontalDecorator)
+        }
     }
 
     private fun obtainMovie(): Movie? {
@@ -59,28 +61,26 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
         return MoviesDataSource().getFilms().find { it.id == movieId }
     }
 
-    private fun fillViews(
-        view: View,
-        movie: Movie?,
-        binding: FragmentMovieDetailsBinding
-    ) {
+    private fun fillViews(movie: Movie?) {
         if (movie != null) {
-            Glide.with(view.context)
-                .load(movie.backposter)
-                .centerInside()
-                .into(binding.ivBackposter)
-            binding.tvPg.text = getString(R.string.pg, movie.pg)
-            binding.tvName.text = movie.name
-            binding.tvGenres.text = movie.genres
-            binding.ratingBar.rating = movie.rating.toFloat()
-            binding.tvReviews.text =
-                resources.getQuantityString(R.plurals.reviews, movie.reviews, movie.reviews)
-            binding.tvStorylineText.text = movie.storyline
+            binding.apply {
+                tvPg.text = getString(R.string.pg, movie.pg)
+                tvName.text = movie.name
+                tvGenres.text = movie.genres
+                ratingBar.rating = movie.rating.toFloat()
+                tvReviews.text =
+                    resources.getQuantityString(R.plurals.reviews, movie.reviews, movie.reviews)
+                tvStorylineText.text = movie.storyline
+                Glide.with(requireContext())
+                    .load(movie.backposter)
+                    .centerInside()
+                    .into(ivBackposter)
+            }
         }
     }
 
     override fun onDestroyView() {
-        fragmentMovieDetailsBinding = null
+        _binding = null
         super.onDestroyView()
     }
 
@@ -89,13 +89,12 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
         const val MOVIE_ID_FLAG = "movieIdFlag"
 
         fun newInstance(id: Int): MovieDetailsFragment {
-            val fragment = MovieDetailsFragment()
-            val args = Bundle()
+            return MovieDetailsFragment().apply {
+                val args = Bundle()
 
-            args.putInt(MOVIE_ID_FLAG, id)
-            fragment.arguments = args
-
-            return fragment
+                args.putInt(MOVIE_ID_FLAG, id)
+                arguments = args
+            }
         }
     }
 }
