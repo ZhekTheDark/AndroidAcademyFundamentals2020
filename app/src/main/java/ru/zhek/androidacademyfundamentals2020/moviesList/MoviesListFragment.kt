@@ -10,17 +10,17 @@ import ru.zhek.androidacademyfundamentals2020.movieDetails.MovieDetailsFragment
 
 class MoviesListFragment : Fragment(R.layout.fragment_movies_list) {
 
-    private var fragmentMoviesListBinding: FragmentMoviesListBinding? = null
+    private var _binding: FragmentMoviesListBinding? = null
+    private val binding get() = _binding!!
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val binding: FragmentMoviesListBinding = FragmentMoviesListBinding.bind(view)
-        fragmentMoviesListBinding = binding
+        _binding = FragmentMoviesListBinding.bind(view)
 
-        initListComponent(binding)
+        initListComponent()
     }
 
-    private fun initListComponent(binding: FragmentMoviesListBinding) {
+    private fun initListComponent() {
         binding.rvMovies.adapter = MoviesAdapter(
             MoviesDataSource().getFilms(),
             MoviesAdapter.OnRecyclerItemClicked {
