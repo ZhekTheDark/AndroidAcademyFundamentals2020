@@ -23,24 +23,34 @@ class MoviesListFragment : Fragment(R.layout.fragment_movies_list) {
     private fun initListComponent() {
         binding.rvMovies.adapter = MoviesAdapter(
             MoviesDataSource().getFilms(),
-            MoviesAdapter.OnRecyclerItemClicked {
-                activity?.supportFragmentManager?.apply {
-                    beginTransaction()
-                        .setCustomAnimations(
-                            R.anim.slide_in_right,
-                            R.anim.slide_out_left,
-                            R.anim.slide_in_left,
-                            R.anim.slide_out_right
-                        )
-                        .addToBackStack(null)
-                        .replace(
-                            R.id.fragments_container,
-                            MovieDetailsFragment.newInstance(it.id),
-                            MovieDetailsFragment.MOVIE_DETAILS_FRAGMENT_FLAG
-                        )
-                        .commit()
-                }
-            })
+            onRecyclerItemClicked()
+        )
+    }
+
+    private fun onRecyclerItemClicked(): MoviesAdapter.OnRecyclerItemClicked {
+        return MoviesAdapter.OnRecyclerItemClicked {
+            activity?.supportFragmentManager?.apply {
+                beginTransaction()
+                    .setCustomAnimations(
+                        R.anim.slide_in_right,
+                        R.anim.slide_out_left,
+                        R.anim.slide_in_left,
+                        R.anim.slide_out_right
+                    )
+                    .addToBackStack(null)
+                    .replace(
+                        R.id.fragments_container,
+                        MovieDetailsFragment.newInstance(it.id),
+                        MovieDetailsFragment.MOVIE_DETAILS_FRAGMENT_FLAG
+                    )
+                    .commit()
+            }
+        }
+    }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 
     companion object {

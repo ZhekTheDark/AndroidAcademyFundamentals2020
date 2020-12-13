@@ -11,21 +11,18 @@ import ru.zhek.androidacademyfundamentals2020.data.MoviesDataSource
 import ru.zhek.androidacademyfundamentals2020.data.models.Movie
 import ru.zhek.androidacademyfundamentals2020.databinding.FragmentMovieDetailsBinding
 
-const val DEFAULT_MOVIE_ID: Int = 1
-
 class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
 
     private var _binding: FragmentMovieDetailsBinding? = null
     private val binding get() = _binding!!
-    private var movieId: Int = arguments?.getInt(MOVIE_ID_FLAG) ?: DEFAULT_MOVIE_ID
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentMovieDetailsBinding.bind(view)
 
-        initListComponent()
-
         val movie: Movie? = obtainMovie()
+
+        initListComponent(movie!!)
 
         fillViews(movie)
 
@@ -34,13 +31,10 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
         }
     }
 
-    private fun initListComponent() {
+    private fun initListComponent(movie: Movie) {
         binding.rvActors.apply {
             adapter = ActorAdapter(
-                MoviesDataSource().getFilms()
-                    .find { it.id == movieId }!!
-                    .castList
-                    .shuffled()
+                movie.castList.shuffled()
             )
 
             val horizontalDecorator =
@@ -57,7 +51,7 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
     }
 
     private fun obtainMovie(): Movie? {
-        movieId = arguments?.getInt(MOVIE_ID_FLAG) ?: DEFAULT_MOVIE_ID
+        val movieId = arguments?.getInt(MOVIE_ID_FLAG) ?: MoviesDataSource().getFilms().first().id
         return MoviesDataSource().getFilms().find { it.id == movieId }
     }
 

@@ -2,7 +2,6 @@ package ru.zhek.androidacademyfundamentals2020.moviesList
 
 import android.content.res.ColorStateList
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.annotation.ColorRes
@@ -19,46 +18,53 @@ class MoviesAdapter(
     private val onClickListener: OnRecyclerItemClicked
 ) : RecyclerView.Adapter<MoviesAdapter.MovieViewHolder>() {
 
-    class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
-        private val binding = ViewHolderMovieBinding.bind(itemView)
+    class MovieViewHolder(private var binding: ViewHolderMovieBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
         fun bind(movie: Movie) {
-            binding.tvName.text = movie.name
-            Glide.with(this.itemView.context)
-                .load(movie.kinoposter)
-                .into(binding.ivKinoposter)
-            binding.tvPg.text = this.itemView.context.getString(R.string.pg, movie.pg)
-            binding.tvGenres.text = movie.genres
-            binding.ratingBar.rating = movie.rating.toFloat()
-            binding.tvReviews.text = this.itemView.context.resources.getQuantityString(
-                R.plurals.reviews,
-                movie.reviews,
-                movie.reviews
-            )
-            binding.tvDuration.text =
-                this.itemView.context.getString(R.string.duration, movie.duration)
-            Glide.with(this.itemView.context)
-                .load(R.drawable.like)
-                .into(binding.ivLike)
-            if (movie.liked) {
-                binding.ivLike.setTint(R.color.tag)
-            } else {
-                binding.ivLike.setTint(R.color.white)
+            binding.apply {
+                tvName.text = movie.name
+                Glide.with(root)
+                    .load(movie.kinoposter)
+                    .into(ivKinoposter)
+                tvPg.text = root.resources.getString(R.string.pg, movie.pg)
+                tvGenres.text = movie.genres
+                ratingBar.rating = movie.rating.toFloat()
+                tvReviews.text = this@MovieViewHolder.itemView.context.resources.getQuantityString(
+//                tvReviews.text = root.resources.getQuantityString(
+                    R.plurals.reviews,
+                    movie.reviews,
+                    movie.reviews
+                )
+                tvDuration.text = root.resources.getString(R.string.duration, movie.duration)
+                Glide.with(root)
+                    .load(R.drawable.like)
+                    .into(ivLike)
+                if (movie.liked) {
+                    ivLike.setTint(R.color.tag)
+                } else {
+                    ivLike.setTint(R.color.white)
+                }
             }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         return MovieViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.view_holder_movie, parent, false)
+            ViewHolderMovieBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
         )
     }
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
-        holder.bind(movies[position])
-        holder.itemView.setOnClickListener {
-            onClickListener.onClick(movies[position])
+        holder.apply {
+            bind(movies[position])
+            itemView.setOnClickListener {
+                onClickListener.onClick(movies[position])
+            }
         }
     }
 
