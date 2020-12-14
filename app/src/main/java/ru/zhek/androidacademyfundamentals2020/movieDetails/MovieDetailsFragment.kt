@@ -22,19 +22,24 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
 
         val movie: Movie? = obtainMovie()
 
-        initListComponent(movie!!)
-
         fillViews(movie)
+
+        initListComponent(movie)
 
         binding.tvBack.setOnClickListener {
             activity?.supportFragmentManager?.popBackStack()
         }
     }
 
-    private fun initListComponent(movie: Movie) {
+    private fun obtainMovie(): Movie? {
+        val movieId = arguments?.getInt(MOVIE_ID_FLAG) ?: MoviesDataSource().getFilms().first().id
+        return MoviesDataSource().getFilms().find { it.id == movieId }
+    }
+
+    private fun initListComponent(movie: Movie?) {
         binding.rvActors.apply {
             adapter = ActorAdapter(
-                movie.castList.shuffled()
+                movie!!.castList.shuffled()
             )
 
             val horizontalDecorator =
@@ -48,11 +53,6 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
                 }
             addItemDecoration(horizontalDecorator)
         }
-    }
-
-    private fun obtainMovie(): Movie? {
-        val movieId = arguments?.getInt(MOVIE_ID_FLAG) ?: MoviesDataSource().getFilms().first().id
-        return MoviesDataSource().getFilms().find { it.id == movieId }
     }
 
     private fun fillViews(movie: Movie?) {
