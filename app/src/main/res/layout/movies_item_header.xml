@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:background="@color/colorPrimary">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/movies_xx_small_margin"
+        android:layout_marginTop="@dimen/movies_location_top_margin"
+        android:layout_marginEnd="@dimen/movies_xx_small_margin"
+        android:layout_marginBottom="@dimen/movies_x_large_margin"
+        android:height="@dimen/movies_line_height"
+        android:drawablePadding="@dimen/movies_padding"
+        android:fontFamily="@font/roboto_black"
+        android:text="@string/movies_list"
+        android:textColor="@color/white"
+        android:textSize="@dimen/movies_text_size"
+        app:drawableStartCompat="@drawable/ic_location" />
+</LinearLayout>

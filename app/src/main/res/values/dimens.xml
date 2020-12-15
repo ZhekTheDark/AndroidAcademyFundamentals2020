@@ -31,13 +31,14 @@
     <dimen name="movies_small_padding">2dp</dimen>
     <dimen name="movies_padding">8dp</dimen>
 
-    <dimen name="movies_xx_small_margin">2dp</dimen>
+    <dimen name="movies_xxx_small_margin">2dp</dimen>
+    <dimen name="movies_xx_small_margin">4dp</dimen>
     <dimen name="movies_x_small_margin">6dp</dimen>
     <dimen name="movies_small_margin">8dp</dimen>
-    <dimen name="movies_margin">16dp</dimen>
-    <dimen name="movies_large_margin">12dp</dimen>
-    <dimen name="movies_avengers_top_margin">28dp</dimen>
-    <dimen name="movies_location_top_margin">56dp</dimen>
+    <dimen name="movies_margin">12dp</dimen>
+    <dimen name="movies_large_margin">16dp</dimen>
+    <dimen name="movies_x_large_margin">24dp</dimen>
+    <dimen name="movies_location_top_margin">44dp</dimen>
 
     <dimen name="movies_line_height">20sp</dimen>
 

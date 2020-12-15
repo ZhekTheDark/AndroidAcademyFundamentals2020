@@ -4,10 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="4dp"
+    android:layout_margin="@dimen/movies_xx_small_margin"
     app:cardBackgroundColor="@color/colorPrimary"
-    app:cardCornerRadius="8dp"
-    tools:context=".moviesList.MoviesListFragment">
+    app:cardCornerRadius="@dimen/movies_small_margin" >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/vh_movie"
@@ -19,9 +18,9 @@
             android:id="@+id/iv_kinoposter"
             android:layout_width="0dp"
             android:layout_height="@dimen/movies_kinoposter_height"
-            android:layout_marginStart="@dimen/movies_xx_small_margin"
-            android:layout_marginTop="@dimen/movies_xx_small_margin"
-            android:layout_marginEnd="@dimen/movies_xx_small_margin"
+            android:layout_marginStart="@dimen/movies_xxx_small_margin"
+            android:layout_marginTop="@dimen/movies_xxx_small_margin"
+            android:layout_marginEnd="@dimen/movies_xxx_small_margin"
             android:contentDescription="@string/kinoposter"
             android:foreground="@drawable/movie_image_gradient"
             android:outlineProvider="background"
@@ -31,7 +30,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
-            app:shapeAppearanceOverlay="@style/roundedImageView"
+            app:shapeAppearanceOverlay="@style/roundedImageView8dp"
             tools:srcCompat="@drawable/fight_club_kinoposter" />
 
         <TextView
@@ -53,7 +52,7 @@
             android:id="@+id/iv_like"
             android:layout_width="@dimen/like_width"
             android:layout_height="@dimen/like_height"
-            android:layout_marginTop="@dimen/movies_large_margin"
+            android:layout_marginTop="@dimen/movies_margin"
             android:layout_marginEnd="@dimen/movies_x_small_margin"
             android:contentDescription="@string/like"
             app:layout_constraintEnd_toEndOf="@+id/iv_kinoposter"
@@ -66,7 +65,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/movies_small_margin"
             android:layout_marginEnd="@dimen/movies_small_margin"
-            android:layout_marginBottom="@dimen/movies_xx_small_margin"
+            android:layout_marginBottom="@dimen/movies_xxx_small_margin"
             android:ellipsize="end"
             android:fontFamily="@font/roboto_light"
             android:maxLines="1"

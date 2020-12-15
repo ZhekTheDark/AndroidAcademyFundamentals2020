@@ -2,6 +2,7 @@ package ru.zhek.androidacademyfundamentals2020.moviesList
 
 import android.content.res.ColorStateList
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.annotation.ColorRes
@@ -13,11 +14,17 @@ import ru.zhek.androidacademyfundamentals2020.R
 import ru.zhek.androidacademyfundamentals2020.data.models.Movie
 import ru.zhek.androidacademyfundamentals2020.databinding.ViewHolderMovieBinding
 
+private const val ITEM_VIEW_TYPE_HEADER = 0
+private const val ITEM_VIEW_TYPE_MOVIE = 1
+private const val HEADER_POSITION = 0
+private const val HEADER = 1
+
 class MoviesAdapter(
     private val movies: List<Movie>,
     private val onClickListener: OnRecyclerItemClicked
-) : RecyclerView.Adapter<MoviesAdapter.MovieViewHolder>() {
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
+    class MoviesHeaderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
     class MovieViewHolder(private var binding: ViewHolderMovieBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
@@ -49,31 +56,54 @@ class MoviesAdapter(
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
-        return MovieViewHolder(
-            ViewHolderMovieBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return when (viewType) {
+            ITEM_VIEW_TYPE_HEADER -> MoviesHeaderViewHolder(
+                LayoutInflater.from(parent.context).inflate(
+                    R.layout.movies_item_header,
+                    parent,
+                    false
+                )
             )
-        )
+            ITEM_VIEW_TYPE_MOVIE -> MovieViewHolder(
+                ViewHolderMovieBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
+            )
+            else -> throw IllegalArgumentException("Unknown viewType: $viewType")
+        }
     }
 
-    override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
-        holder.apply {
-            bind(movies[position])
-            itemView.setOnClickListener {
-                onClickListener.onClick(movies[position])
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        when (holder) {
+            is MovieViewHolder -> holder.apply {
+                bind(movies[position - HEADER])
+                itemView.setOnClickListener {
+                    onClickListener.onClick(movies[position - HEADER])
+                }
             }
         }
     }
 
     override fun getItemCount(): Int {
-        return movies.size
+        return movies.size + HEADER
     }
 
     class OnRecyclerItemClicked(val clickListener: (movie: Movie) -> Unit) {
         fun onClick(movie: Movie) = clickListener(movie)
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return when (position) {
+            HEADER_POSITION -> ITEM_VIEW_TYPE_HEADER
+            else -> ITEM_VIEW_TYPE_MOVIE
+        }
+    }
+
+    override fun getItemId(position: Int): Long {
+        return movies[position - HEADER].id.toLong()
     }
 }
 
