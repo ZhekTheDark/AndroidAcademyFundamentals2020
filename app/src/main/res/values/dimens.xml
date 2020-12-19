@@ -45,4 +45,7 @@
     <dimen name="movies_star_width">12dp</dimen>
     <dimen name="movies_star_height">12dp</dimen>
     <dimen name="movies_kinoposter_height">248dp</dimen>
+
+    <!--Actor-->
+    <dimen name="vh_actor_width">80dp</dimen>
 </resources>

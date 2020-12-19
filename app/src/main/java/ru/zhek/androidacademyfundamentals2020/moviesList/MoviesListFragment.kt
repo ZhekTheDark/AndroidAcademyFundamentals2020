@@ -9,7 +9,6 @@ import ru.zhek.androidacademyfundamentals2020.data.MoviesDataSource
 import ru.zhek.androidacademyfundamentals2020.databinding.FragmentMoviesListBinding
 import ru.zhek.androidacademyfundamentals2020.movieDetails.MovieDetailsFragment
 
-private const val HEADER_POSITION = 0
 private const val DEFAULT_SPAN = 1
 
 class MoviesListFragment : Fragment(R.layout.fragment_movies_list) {
@@ -43,7 +42,7 @@ class MoviesListFragment : Fragment(R.layout.fragment_movies_list) {
             spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
                 override fun getSpanSize(position: Int): Int {
                     return when (position) {
-                        HEADER_POSITION -> spanCount
+                        MoviesAdapter.HEADER_POSITION -> spanCount
                         else -> DEFAULT_SPAN
                     }
                 }

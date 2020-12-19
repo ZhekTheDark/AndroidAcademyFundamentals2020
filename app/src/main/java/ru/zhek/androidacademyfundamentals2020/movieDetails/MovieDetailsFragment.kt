@@ -20,7 +20,8 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentMovieDetailsBinding.bind(view)
 
-        val movie: Movie? = obtainMovie()
+        val movieId = arguments?.getInt(MOVIE_ID_FLAG) ?: MoviesDataSource().getFilms().first().id
+        val movie: Movie = obtainMovie(movieId)
 
         fillViews(movie)
 
@@ -31,15 +32,32 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
         }
     }
 
-    private fun obtainMovie(): Movie? {
-        val movieId = arguments?.getInt(MOVIE_ID_FLAG) ?: MoviesDataSource().getFilms().first().id
-        return MoviesDataSource().getFilms().find { it.id == movieId }
+    private fun obtainMovie(id: Int): Movie {
+        return MoviesDataSource().getFilms().find { it.id == id }!!
     }
 
-    private fun initListComponent(movie: Movie?) {
+    private fun fillViews(movie: Movie) {
+        binding.apply {
+            tvPg.text = getString(R.string.pg, movie.pg)
+            tvName.text = movie.name
+            tvGenres.text = movie.genres
+            ratingBar.rating = movie.rating.toFloat()
+            tvReviews.text =
+                resources.getQuantityString(R.plurals.reviews, movie.reviews, movie.reviews)
+            tvStorylineText.text = movie.storyline
+            Glide.with(requireContext())
+                .load(movie.backposter)
+                .centerInside()
+                .into(ivBackposter)
+        }
+    }
+
+    private fun initListComponent(movie: Movie) {
         binding.rvActors.apply {
+            setHasFixedSize(true)
+
             adapter = ActorAdapter(
-                movie!!.castList.shuffled()
+                movie.castList.shuffled()
             )
 
             val horizontalDecorator =
@@ -52,24 +70,6 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
                     )
                 }
             addItemDecoration(horizontalDecorator)
-        }
-    }
-
-    private fun fillViews(movie: Movie?) {
-        if (movie != null) {
-            binding.apply {
-                tvPg.text = getString(R.string.pg, movie.pg)
-                tvName.text = movie.name
-                tvGenres.text = movie.genres
-                ratingBar.rating = movie.rating.toFloat()
-                tvReviews.text =
-                    resources.getQuantityString(R.plurals.reviews, movie.reviews, movie.reviews)
-                tvStorylineText.text = movie.storyline
-                Glide.with(requireContext())
-                    .load(movie.backposter)
-                    .centerInside()
-                    .into(ivBackposter)
-            }
         }
     }
 

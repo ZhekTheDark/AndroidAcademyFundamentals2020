@@ -16,7 +16,6 @@ import ru.zhek.androidacademyfundamentals2020.databinding.ViewHolderMovieBinding
 
 private const val ITEM_VIEW_TYPE_HEADER = 0
 private const val ITEM_VIEW_TYPE_MOVIE = 1
-private const val HEADER_POSITION = 0
 private const val HEADER = 1
 
 class MoviesAdapter(
@@ -31,9 +30,7 @@ class MoviesAdapter(
         fun bind(movie: Movie) {
             binding.apply {
                 tvName.text = movie.name
-                Glide.with(root)
-                    .load(movie.kinoposter)
-                    .into(ivKinoposter)
+                fillImage(movie.kinoposter, ivKinoposter)
                 tvPg.text = root.resources.getString(R.string.pg, movie.pg)
                 tvGenres.text = movie.genres
                 ratingBar.rating = movie.rating.toFloat()
@@ -44,15 +41,22 @@ class MoviesAdapter(
                     movie.reviews
                 )
                 tvDuration.text = root.resources.getString(R.string.duration, movie.duration)
-                Glide.with(root)
-                    .load(R.drawable.like)
-                    .into(ivLike)
+                fillImage(R.drawable.like, ivLike)
                 if (movie.liked) {
                     ivLike.setTint(R.color.tag)
                 } else {
                     ivLike.setTint(R.color.white)
                 }
             }
+        }
+
+        private fun ViewHolderMovieBinding.fillImage(
+            resource: Int,
+            viewId: ImageView
+        ) {
+            Glide.with(root)
+                .load(resource)
+                .into(viewId)
         }
     }
 
@@ -104,6 +108,10 @@ class MoviesAdapter(
 
     override fun getItemId(position: Int): Long {
         return movies[position - HEADER].id.toLong()
+    }
+
+    companion object {
+        const val HEADER_POSITION = 0
     }
 }
 

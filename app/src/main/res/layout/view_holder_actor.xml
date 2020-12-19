@@ -7,14 +7,14 @@
     app:cardBackgroundColor="@color/colorPrimary">
 
     <LinearLayout
-        android:layout_width="80dp"
+        android:layout_width="@dimen/vh_actor_width"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/iv_actor"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="@dimen/vh_actor_width"
             android:contentDescription="@string/cast"
             app:shapeAppearanceOverlay="@style/roundedImageView4dp"
             tools:srcCompat="@drawable/robert_downey_jr" />
