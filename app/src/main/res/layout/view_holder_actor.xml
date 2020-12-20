@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    app:cardBackgroundColor="@color/colorPrimary">
+
+    <LinearLayout
+        android:layout_width="@dimen/vh_actor_width"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/iv_actor"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/vh_actor_width"
+            android:contentDescription="@string/cast"
+            app:shapeAppearanceOverlay="@style/roundedImageView4dp"
+            tools:srcCompat="@drawable/robert_downey_jr" />
+
+        <TextView
+            android:id="@+id/tv_actor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/movie_details_x_small_margin"
+            android:ellipsize="end"
+            android:fontFamily="@font/roboto_medium"
+            android:maxLines="2"
+            android:textColor="@color/cast"
+            android:textSize="@dimen/movie_details_small_text_size"
+            android:textStyle="bold"
+            app:lineHeight="@dimen/movie_details_small_line_height"
+            tools:text="Robert Downey Jr." />
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

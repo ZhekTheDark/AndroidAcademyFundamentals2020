@@ -2,6 +2,7 @@ package ru.zhek.androidacademyfundamentals2020
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import ru.zhek.androidacademyfundamentals2020.moviesList.MoviesListFragment
 
 class MainActivity : AppCompatActivity() {
 

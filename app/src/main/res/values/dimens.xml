@@ -7,6 +7,7 @@
     <dimen name="movie_detail_large_text_size">24sp</dimen>
 
     <dimen name="movie_details_padding">8dp</dimen>
+    <dimen name="movie_details_large_padding">10dp</dimen>
 
     <dimen name="movie_details_small_margin">8dp</dimen>
     <dimen name="movie_details_x_large_margin">18dp</dimen>
@@ -20,6 +21,9 @@
     <dimen name="movie_details_large_line_height">24sp</dimen>
     <dimen name="movie_details_small_line_height">16sp</dimen>
 
+    <dimen name="like_width">16dp</dimen>
+    <dimen name="like_height">14dp</dimen>
+
     <!--Movies-->
     <dimen name="movies_small_text_size">12sp</dimen>
     <dimen name="movies_text_size">14sp</dimen>
@@ -27,18 +31,21 @@
     <dimen name="movies_small_padding">2dp</dimen>
     <dimen name="movies_padding">8dp</dimen>
 
-    <dimen name="movies_xx_small_margin">2dp</dimen>
+    <dimen name="movies_xxx_small_margin">2dp</dimen>
+    <dimen name="movies_xx_small_margin">4dp</dimen>
     <dimen name="movies_x_small_margin">6dp</dimen>
     <dimen name="movies_small_margin">8dp</dimen>
-    <dimen name="movies_margin">16dp</dimen>
-    <dimen name="movies_large_margin">12dp</dimen>
-    <dimen name="movies_avengers_top_margin">28dp</dimen>
-    <dimen name="movies_location_top_margin">56dp</dimen>
+    <dimen name="movies_margin">12dp</dimen>
+    <dimen name="movies_large_margin">16dp</dimen>
+    <dimen name="movies_x_large_margin">24dp</dimen>
+    <dimen name="movies_location_top_margin">44dp</dimen>
 
-    <dimen name="movies_small_line_height">12sp</dimen>
     <dimen name="movies_line_height">20sp</dimen>
 
     <dimen name="movies_star_width">12dp</dimen>
     <dimen name="movies_star_height">12dp</dimen>
+    <dimen name="movies_kinoposter_height">248dp</dimen>
 
+    <!--Actor-->
+    <dimen name="vh_actor_width">80dp</dimen>
 </resources>

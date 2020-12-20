@@ -1,186 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
     android:clipToPadding="false"
-    android:fillViewport="true"
-    tools:context=".MoviesListFragment">
+    tools:context=".moviesList.MoviesListFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_movies"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/tv_location"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/movies_margin"
-            android:layout_marginTop="@dimen/movies_location_top_margin"
-            android:layout_marginEnd="@dimen/movies_margin"
-            android:height="@dimen/movies_line_height"
-            android:drawablePadding="@dimen/movies_padding"
-            android:fontFamily="@font/roboto_black"
-            android:text="@string/movies_list"
-            android:textColor="@color/white"
-            android:textSize="@dimen/movies_text_size"
-            app:drawableStartCompat="@drawable/ic_location"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.5" />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/avengers"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/movies_large_margin"
-            android:layout_marginTop="@dimen/movies_avengers_top_margin"
-            android:layout_marginEnd="@dimen/movies_small_margin"
-            android:background="@drawable/movie_bg"
-            app:layout_constraintEnd_toStartOf="@+id/guideline"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_location">
-
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/iv_movie"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/movies_xx_small_margin"
-                android:layout_marginTop="@dimen/movies_xx_small_margin"
-                android:layout_marginEnd="@dimen/movies_xx_small_margin"
-                android:foreground="@drawable/movie_image_gradient"
-                android:outlineProvider="background"
-                android:scaleType="centerCrop"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintDimensionRatio="w,1:1"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0"
-                app:shapeAppearanceOverlay="@style/roundedImageView"
-                app:srcCompat="@drawable/movie" />
-
-            <TextView
-                android:id="@+id/tv_pg"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/movies_x_small_margin"
-                android:layout_marginTop="@dimen/movies_x_small_margin"
-                android:background="@drawable/ic_thirteen_rectangle"
-                android:fontFamily="@font/roboto_black"
-                android:gravity="center"
-                android:text="@string/_13"
-                android:textColor="@color/white"
-                android:textSize="@dimen/movie_details_small_text_size"
-                app:layout_constraintStart_toStartOf="@+id/iv_movie"
-                app:layout_constraintTop_toTopOf="@+id/iv_movie" />
-
-            <ImageView
-                android:id="@+id/iv_like"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/movies_large_margin"
-                android:layout_marginEnd="@dimen/movies_x_small_margin"
-                android:contentDescription="@string/like"
-                app:layout_constraintEnd_toEndOf="@+id/iv_movie"
-                app:layout_constraintTop_toTopOf="@+id/iv_movie"
-                app:srcCompat="@drawable/ic_like" />
-
-            <TextView
-                android:id="@+id/tv_tag"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/movies_small_margin"
-                android:layout_marginEnd="@dimen/movies_small_margin"
-                android:layout_marginBottom="@dimen/movies_xx_small_margin"
-                android:fontFamily="@font/roboto_light"
-                android:maxLines="1"
-                android:ellipsize="end"
-                android:text="@string/action_adventure_drama"
-                android:textColor="@color/tag"
-                android:textSize="@dimen/movies_small_text_size"
-                app:layout_constraintBottom_toTopOf="@+id/tv_reviews"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <ru.zhek.androidacademyfundamentals2020.ui.custom.RatingBar
-                android:id="@+id/ratingBar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:numStars="5"
-                android:progressBackgroundTint="@color/gray"
-                android:progressDrawable="@drawable/custom_rating_bar"
-                android:progressTint="@color/star_on"
-                android:rating="4"
-                app:drawableHeight="@dimen/movies_star_height"
-                app:drawableWidth="@dimen/movies_star_width"
-                app:innerPadding="@dimen/movies_small_padding"
-                app:layout_constraintBottom_toBottomOf="@+id/tv_reviews"
-                app:layout_constraintStart_toStartOf="@+id/tv_tag"
-                app:layout_constraintTop_toTopOf="@+id/tv_reviews" />
-
-            <TextView
-                android:id="@+id/tv_reviews"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/movies_x_small_margin"
-                android:layout_marginEnd="@dimen/movies_small_margin"
-                android:layout_marginBottom="@dimen/movies_small_margin"
-                android:fontFamily="@font/roboto_black"
-                android:maxLines="1"
-                android:ellipsize="end"
-                android:text="@string/_125_reviews"
-                android:textAllCaps="true"
-                android:textColor="@color/gray"
-                android:textSize="@dimen/movies_small_text_size"
-                app:layout_constraintBottom_toBottomOf="@+id/iv_movie"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/ratingBar" />
-
-            <TextView
-                android:id="@+id/tv_movies_list_name"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/movies_small_margin"
-                android:layout_marginTop="@dimen/movies_small_margin"
-                android:layout_marginEnd="@dimen/movies_small_margin"
-                android:fontFamily="@font/roboto_black"
-                android:text="@string/movies_avengers_end_game"
-                android:textColor="@color/white"
-                android:textSize="@dimen/movies_text_size"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/iv_movie" />
-
-            <TextView
-                android:id="@+id/tv_movies_list_duration"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/movies_small_margin"
-                android:layout_marginTop="@dimen/movies_small_margin"
-                android:layout_marginEnd="@dimen/movies_small_margin"
-                android:layout_marginBottom="@dimen/movies_small_margin"
-                android:fontFamily="@font/roboto_black"
-                android:maxLines="1"
-                android:ellipsize="end"
-                android:text="@string/_137_min"
-                android:textAllCaps="true"
-                android:textColor="@color/duration"
-                android:textSize="@dimen/movies_small_text_size"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_movies_list_name" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>
+        android:layout_height="match_parent"
+        android:layout_marginStart="@dimen/movies_margin"
+        android:layout_marginTop="@dimen/movies_margin"
+        android:layout_marginEnd="@dimen/movies_margin"
+        android:layout_marginBottom="@dimen/movies_margin"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:spanCount="2"
+        tools:listitem="@layout/view_holder_movie" />
+</LinearLayout>
