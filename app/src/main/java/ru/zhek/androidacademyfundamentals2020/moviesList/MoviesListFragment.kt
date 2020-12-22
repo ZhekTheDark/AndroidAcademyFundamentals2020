@@ -5,7 +5,6 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import ru.zhek.androidacademyfundamentals2020.R
-import ru.zhek.androidacademyfundamentals2020.data.MoviesDataSource
 import ru.zhek.androidacademyfundamentals2020.databinding.FragmentMoviesListBinding
 import ru.zhek.androidacademyfundamentals2020.movieDetails.MovieDetailsFragment
 
@@ -23,18 +22,45 @@ class MoviesListFragment : Fragment(R.layout.fragment_movies_list) {
         initListComponent()
     }
 
+    // TODO
     private fun initListComponent() {
         setSpanSizeLookup()
+/*
+//        val job = Job()
+//        val scope = CoroutineScope(job + Dispatchers.Main)
+        var movies: List<Movie> = listOf()
+        CoroutineScope(Dispatchers.Default).launch {
+//        scope.launch {
+            withContext(Dispatchers.Main) {
+                delay(1_000)
+                movies = withContext(Dispatchers.IO) {
+                    loadMovies(context!!)
+                }
+
+                delay(1_000)
+                Log.d("Movies", movies.first().toString())
+                if (binding.rvMovies.adapter is MoviesAdapter)
+                    Log.d("Movies", "vse ok")
+                binding.rvMovies.adapter?.notifyDataSetChanged()
+            }
+        }*/
 
         binding.rvMovies.apply {
             setHasFixedSize(true)
             adapter?.setHasStableIds(true)
 
             adapter = MoviesAdapter(
-                MoviesDataSource().getFilms(),
+//                MoviesDataSource().getFilms(),
                 onRecyclerItemClicked()
             )
         }
+
+//        TODO
+        (binding.rvMovies.adapter as MoviesAdapter).apply {
+            updateData(context!!)
+            notifyDataSetChanged()
+        }
+
     }
 
     private fun setSpanSizeLookup() {
