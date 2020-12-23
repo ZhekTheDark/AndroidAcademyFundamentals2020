@@ -2,7 +2,6 @@ package ru.zhek.androidacademyfundamentals2020.moviesList
 
 import android.content.Context
 import android.content.res.ColorStateList
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -160,7 +159,12 @@ class MoviesAdapter(
             binding.apply {
                 tvName.text = movie.title
 //                TODO extract Glide to function
-                val requestOptions = RequestOptions().diskCacheStrategy(DiskCacheStrategy.NONE).placeholder(R.drawable.loading_animation)
+                val requestOptions = RequestOptions()
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+//                    .placeholder(R.drawable.loading_animation)
+                    .placeholder(R.drawable.ic_connection_error)
+
+//                    .
                 Glide.with(root)
                     .load(movie.poster)
                     .apply(requestOptions)
@@ -246,21 +250,9 @@ class MoviesAdapter(
         return movies[position - HEADER].id.toLong()
     }
 
-    fun updateData(context: Context) {
-        //        val job = Job()
-//        val scope = CoroutineScope(job + Dispatchers.Main)
-//        movies: List<Movie> = listOf()
-        CoroutineScope(Dispatchers.Unconfined).launch {
-//        scope.launch {
-            withContext(Dispatchers.Main) {
-                movies = withContext(Dispatchers.IO) {
-                    loadMovies(context)
-                }
-
-                Log.d("MyLog", movies.first().toString())
-                notifyDataSetChanged()
-            }
-        }
+    suspend fun updateData(context: Context) {
+        movies = loadMovies(context)
+        notifyDataSetChanged()
     }
 
     companion object {
@@ -268,6 +260,7 @@ class MoviesAdapter(
     }
 }
 
+//TODO
 fun ImageView.setTint(@ColorRes colorRes: Int) {
     ImageViewCompat.setImageTintList(
         this,
