@@ -109,6 +109,7 @@ import ru.zhek.androidacademyfundamentals2020.R
 import ru.zhek.androidacademyfundamentals2020.data.Movie
 import ru.zhek.androidacademyfundamentals2020.data.loadMovies
 import ru.zhek.androidacademyfundamentals2020.databinding.FragmentMovieDetailsBinding
+import kotlin.math.round
 
 class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
 
@@ -159,7 +160,7 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
             tvName.text = movie.title
             // TODO
             tvGenres.text = movie.genres.joinToString { it.name }
-            ratingBar.rating = movie.ratings
+            ratingBar.rating = round(movie.ratings) / 2
             tvReviews.text =
                 resources.getQuantityString(
                     R.plurals.reviews,
