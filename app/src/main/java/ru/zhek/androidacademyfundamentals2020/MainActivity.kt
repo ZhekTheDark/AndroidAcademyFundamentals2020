@@ -20,5 +20,7 @@ class MainActivity : AppCompatActivity() {
                 )
                 .commit()
         }
+
+        NetworkChecker.start(this)
     }
 }

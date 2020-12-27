@@ -6,16 +6,22 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
     android:clipToPadding="false"
+    android:orientation="vertical"
     tools:context=".moviesList.MoviesListFragment">
+
+    <ImageView
+        android:id="@+id/iv_error"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/movies_margin"
+        android:src="@drawable/ic_connection_error"
+        android:contentDescription="@string/internet_error" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_movies"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginStart="@dimen/movies_margin"
-        android:layout_marginTop="@dimen/movies_margin"
-        android:layout_marginEnd="@dimen/movies_margin"
-        android:layout_marginBottom="@dimen/movies_margin"
+        android:layout_margin="@dimen/movies_margin"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:spanCount="2"
         tools:listitem="@layout/view_holder_movie" />

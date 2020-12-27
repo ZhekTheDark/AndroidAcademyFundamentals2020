@@ -1,7 +1,6 @@
 package ru.zhek.androidacademyfundamentals2020.movieDetails
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -18,49 +17,42 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
 
     private var _binding: FragmentMovieDetailsBinding? = null
     private val binding get() = _binding!!
+    private val exceptionHandler = CoroutineExceptionHandler { coroutineContext, exception ->
+        println("CoroutineExceptionHandler got $exception in $coroutineContext")
+    }
+    private val job = Job()
+    private val scope: CoroutineScope = CoroutineScope(
+        Dispatchers.Main + job + exceptionHandler
+    )
+    lateinit var movie: Movie
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentMovieDetailsBinding.bind(view)
 
         val movieId = arguments!!.getInt(MOVIE_ID_FLAG)
-        val movie: Movie = obtainMovie(movieId)
 
-        fillViews(movie)
-
-        if (movie.actors.isNotEmpty()) initListComponent(movie)
+        scope.launch {
+            movie = obtainMovieAsync(movieId).await()
+            fillViews(movie)
+            if (movie.actors.isNotEmpty()) initListComponent(movie)
+        }
 
         binding.tvBack.setOnClickListener {
             activity?.supportFragmentManager?.popBackStack()
         }
     }
 
-    private fun obtainMovie(id: Int): Movie {
-
-        // TODO
-        val job = Job()
-        val scope = CoroutineScope(job + Dispatchers.Main)
-        var movies: List<Movie> = listOf()
-//        CoroutineScope(Dispatchers.Default).launch {
-//        scope.launch {
-        runBlocking {
-//            withContext(Dispatchers.Main) {
-                movies = withContext(Dispatchers.IO) {
-                    loadMovies(requireContext())
-                }
-
-                Log.d("MyLog", movies.first().toString())
-//            }
-        }
-
-        return movies.find { it.id == id }!!
+    private fun obtainMovieAsync(id: Int): Deferred<Movie> = scope.async {
+        val movies = loadMovies(requireContext())
+        movies.find { it.id == id }!!
     }
+
 
     private fun fillViews(movie: Movie) {
         binding.apply {
             tvPg.text = getString(R.string.pg, movie.minimumAge)
             tvName.text = movie.title
-            // TODO
             tvGenres.text = movie.genres.joinToString { it.name }
             ratingBar.rating = round(movie.ratings) / 2
             tvReviews.text =
@@ -74,17 +66,15 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
                 .load(movie.backdrop)
                 .fitCenter()
                 .into(ivBackposter)
-            if (movie.actors.isEmpty()) tvActor.visibility = View.GONE
         }
     }
 
     private fun initListComponent(movie: Movie) {
+        binding.tvActor.visibility = View.VISIBLE
         binding.rvActors.apply {
             setHasFixedSize(true)
 
-            adapter = ActorAdapter(
-                movie.actors
-            )
+            adapter = ActorAdapter(movie.actors)
 
             val horizontalDecorator =
                 DividerItemDecoration(context, DividerItemDecoration.HORIZONTAL).apply {

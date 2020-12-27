@@ -2,14 +2,10 @@ package ru.zhek.androidacademyfundamentals2020.moviesList
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import ru.zhek.androidacademyfundamentals2020.NetworkChecker
 import ru.zhek.androidacademyfundamentals2020.R
 import ru.zhek.androidacademyfundamentals2020.data.Movie
@@ -23,30 +19,28 @@ class MoviesListFragment : Fragment(R.layout.fragment_movies_list), NetworkCheck
 
     private var _binding: FragmentMoviesListBinding? = null
     private val binding get() = _binding!!
+    private val exceptionHandler = CoroutineExceptionHandler { coroutineContext, exception ->
+        println("CoroutineExceptionHandler got $exception in $coroutineContext")
+    }
     private val job = Job()
-    private val scope: CoroutineScope = CoroutineScope(Dispatchers.Main + job)
+    private val scope: CoroutineScope = CoroutineScope(
+        Dispatchers.Main + job + exceptionHandler
+    )
     private lateinit var jobUpdateData: Job
 
     private var movies: List<Movie> = listOf()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d("TagLifecycle", "onViewCreated")
         _binding = FragmentMoviesListBinding.bind(view)
 
         NetworkChecker.addSubscriber(this)
-        Log.d("MyTag", "NetworkChecker.isConnected = ${NetworkChecker.isConnected}")
 
         binding.rvMovies.apply {
             setHasFixedSize(true)
             adapter?.setHasStableIds(true)
         }
-        if (NetworkChecker.isConnected) {
-            binding.ivError.visibility = View.GONE
-            initListComponent()
-        } else {
-            binding.ivError.visibility = View.VISIBLE
-        }
+        drawUI()
     }
 
     private fun initListComponent() {
@@ -102,20 +96,25 @@ class MoviesListFragment : Fragment(R.layout.fragment_movies_list), NetworkCheck
     override fun onDestroyView() {
         _binding = null
         jobUpdateData.cancel()
+        scope.cancel()
         NetworkChecker.removeSubscriber(this)
         super.onDestroyView()
     }
 
-    override fun onStateChanged(str: String) {
+    override fun onStateChanged() {
         activity?.runOnUiThread {
-            if (NetworkChecker.isConnected) {
-                binding.ivError.visibility = View.GONE
-                initListComponent()
-            } else {
-                binding.ivError.visibility = View.VISIBLE
-            }
+            drawUI()
         }
-        super.onStateChanged(str)
+        super.onStateChanged()
+    }
+
+    private fun drawUI() {
+        if (NetworkChecker.isConnected) {
+            binding.ivError.visibility = View.GONE
+            initListComponent()
+        } else {
+            binding.ivError.visibility = View.VISIBLE
+        }
     }
 
     companion object {
