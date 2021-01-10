@@ -8,33 +8,58 @@ import android.util.Log
 
 object NetworkChecker {
 
-    interface Listener {
+    interface NetworkStateListener {
         fun onStateChanged() {}
     }
 
     var isConnected = true
-    private val subscribers = mutableListOf<Listener>()
+    private val subscribers = mutableListOf<NetworkStateListener>()
+//    private lateinit var networkCallback: ConnectivityManager.NetworkCallback
 
-    fun addSubscriber(subscriber: Listener) {
-        subscribers.add(subscriber)
+    fun addSubscriber(subscriber: NetworkStateListener) {
+        if (subscriber !in subscribers)
+            subscribers.add(subscriber)
     }
 
-    fun removeSubscriber(subscriber: Listener) {
+    fun removeSubscriber(subscriber: NetworkStateListener) {
         subscribers.remove(subscriber)
     }
 
-    fun start(context: Context) {
+    fun startNetworkChecker(context: Context) {
         try {
             val connectivityManager =
                 context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-            val builder = NetworkRequest.Builder()
 
-            if (connectivityManager != null) {
-                connectivityManager.registerNetworkCallback(
+//            if (connectivityManager != null) {
+//                val builder = NetworkRequest.Builder()
+//                connectivityManager.registerNetworkCallback(
+//                    builder.build(),
+//                    object : ConnectivityManager.NetworkCallback() {
+//                        override fun onAvailable(network: Network) {
+//                            subscribers.forEach { it.onStateChanged() }
+//                            isConnected = true
+//                            super.onAvailable(network)
+//                        }
+//
+//                        override fun onLost(network: Network) {
+//                            isConnected = false
+//                            super.onLost(network)
+//                        }
+//
+//                        override fun onUnavailable() {
+//                            isConnected = false
+//                            super.onUnavailable()
+//                        }
+//                    }
+//                )
+//            }
+            connectivityManager.let {
+                val builder = NetworkRequest.Builder()
+                it.registerNetworkCallback(
                     builder.build(),
                     object : ConnectivityManager.NetworkCallback() {
                         override fun onAvailable(network: Network) {
-                            subscribers.forEach { it.onStateChanged() }
+                            subscribers.forEach { subscriber -> subscriber.onStateChanged() }
                             isConnected = true
                             super.onAvailable(network)
                         }
@@ -51,8 +76,15 @@ object NetworkChecker {
                     }
                 )
             }
+
         } catch (e: Exception) {
             Log.d(this.toString(), "exception in NetworkChecker.start")
         }
     }
+
+//    fun stopNetworkChecker(context: Context) {
+//        val connectivityManager =
+//            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+//        connectivityManager.unregisterNetworkCallback(networkCallback)
+//    }
 }

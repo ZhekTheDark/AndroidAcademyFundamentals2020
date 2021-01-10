@@ -15,7 +15,7 @@ import ru.zhek.androidacademyfundamentals2020.movieDetails.MovieDetailsFragment
 
 private const val DEFAULT_SPAN = 1
 
-class MoviesListFragment : Fragment(R.layout.fragment_movies_list), NetworkChecker.Listener {
+class MoviesListFragment : Fragment(R.layout.fragment_movies_list), NetworkChecker.NetworkStateListener {
 
     private var _binding: FragmentMoviesListBinding? = null
     private val binding get() = _binding!!
@@ -96,7 +96,7 @@ class MoviesListFragment : Fragment(R.layout.fragment_movies_list), NetworkCheck
     override fun onDestroyView() {
         _binding = null
         jobUpdateData.cancel()
-        scope.cancel()
+//        scope.cancel()
         NetworkChecker.removeSubscriber(this)
         super.onDestroyView()
     }

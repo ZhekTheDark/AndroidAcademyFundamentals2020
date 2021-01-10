@@ -91,6 +91,7 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
 
     override fun onDestroyView() {
         _binding = null
+        scope.cancel()
         super.onDestroyView()
     }
 
