@@ -2,7 +2,9 @@ package ru.zhek.androidacademyfundamentals2020.moviesList
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import kotlinx.coroutines.*
@@ -15,19 +17,19 @@ import ru.zhek.androidacademyfundamentals2020.movieDetails.MovieDetailsFragment
 
 private const val DEFAULT_SPAN = 1
 
-class MoviesListFragment : Fragment(R.layout.fragment_movies_list), NetworkChecker.NetworkStateListener {
+class MoviesListFragment : Fragment(R.layout.fragment_movies_list),
+    NetworkChecker.NetworkStateListener {
 
     private var _binding: FragmentMoviesListBinding? = null
     private val binding get() = _binding!!
     private val exceptionHandler = CoroutineExceptionHandler { coroutineContext, exception ->
-        println("CoroutineExceptionHandler got $exception in $coroutineContext")
+        Log.d(this.toString(), "CoroutineExceptionHandler got $exception in $coroutineContext")
     }
     private val job = Job()
     private val scope: CoroutineScope = CoroutineScope(
         Dispatchers.Main + job + exceptionHandler
     )
     private lateinit var jobUpdateData: Job
-
     private var movies: List<Movie> = listOf()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -41,6 +43,11 @@ class MoviesListFragment : Fragment(R.layout.fragment_movies_list), NetworkCheck
             adapter?.setHasStableIds(true)
         }
         drawUI()
+    }
+
+    private fun drawUI() {
+        binding.ivError.isVisible = !NetworkChecker.isConnected
+        if (NetworkChecker.isConnected) initListComponent()
     }
 
     private fun initListComponent() {
@@ -96,25 +103,20 @@ class MoviesListFragment : Fragment(R.layout.fragment_movies_list), NetworkCheck
     override fun onDestroyView() {
         _binding = null
         jobUpdateData.cancel()
+        //TODO
+        Log.d("myTag", "onDestroyView called")
 //        scope.cancel()
+//        job.cancel()
+//        jobUpdateData.cancel()
         NetworkChecker.removeSubscriber(this)
         super.onDestroyView()
     }
 
-    override fun onStateChanged() {
+    override fun onNetworkStateChanged() {
         activity?.runOnUiThread {
             drawUI()
         }
-        super.onStateChanged()
-    }
-
-    private fun drawUI() {
-        if (NetworkChecker.isConnected) {
-            binding.ivError.visibility = View.GONE
-            initListComponent()
-        } else {
-            binding.ivError.visibility = View.VISIBLE
-        }
+        super.onNetworkStateChanged()
     }
 
     companion object {

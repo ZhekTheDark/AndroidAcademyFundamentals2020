@@ -1,6 +1,7 @@
 package ru.zhek.androidacademyfundamentals2020.movieDetails
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -18,13 +19,12 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
     private var _binding: FragmentMovieDetailsBinding? = null
     private val binding get() = _binding!!
     private val exceptionHandler = CoroutineExceptionHandler { coroutineContext, exception ->
-        println("CoroutineExceptionHandler got $exception in $coroutineContext")
+        Log.d(this.toString(), "CoroutineExceptionHandler got $exception in $coroutineContext")
     }
     private val job = Job()
     private val scope: CoroutineScope = CoroutineScope(
         Dispatchers.Main + job + exceptionHandler
     )
-    lateinit var movie: Movie
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -33,7 +33,7 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
         val movieId = arguments!!.getInt(MOVIE_ID_FLAG)
 
         scope.launch {
-            movie = obtainMovieAsync(movieId).await()
+            val movie = obtainMovie(movieId)
             fillViews(movie)
             if (movie.actors.isNotEmpty()) initListComponent(movie)
         }
@@ -43,11 +43,10 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
         }
     }
 
-    private fun obtainMovieAsync(id: Int): Deferred<Movie> = scope.async {
+    private suspend fun obtainMovie(id: Int): Movie {
         val movies = loadMovies(requireContext())
-        movies.find { it.id == id }!!
+        return movies.find { it.id == id }!!
     }
-
 
     private fun fillViews(movie: Movie) {
         binding.apply {
