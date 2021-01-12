@@ -5,21 +5,35 @@ import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkRequest
 import android.util.Log
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
-//TODO
 object NetworkChecker {
 
     interface NetworkStateListener {
         fun onNetworkStateChanged() {}
     }
 
+    class NetworkCallback : ConnectivityManager.NetworkCallback() {
+        override fun onAvailable(network: Network) {
+            isConnected = true
+            subscribers.forEach { subscriber -> subscriber.onNetworkStateChanged() }
+            super.onAvailable(network)
+        }
+
+        override fun onLost(network: Network) {
+            isConnected = false
+            super.onLost(network)
+        }
+
+        override fun onUnavailable() {
+            isConnected = false
+            super.onUnavailable()
+        }
+    }
+
     var isConnected = true
     private val subscribers = mutableListOf<NetworkStateListener>()
-//    private lateinit var networkCallback: ConnectivityManager.NetworkCallback
+    private val networkCallback = NetworkCallback()
 
     fun addSubscriber(subscriber: NetworkStateListener) {
         if (subscriber !in subscribers)
@@ -31,56 +45,23 @@ object NetworkChecker {
     }
 
     fun startNetworkChecker(context: Context) {
-        //TODO
-        CoroutineScope(Dispatchers.Main).launch {
-            var i = 0
-            while (i > -1) {
-                delay(1_000)
-
-                Log.d("myTag NetworkChecker", i.toString())
-                i++
-            }
-        }
-
         try {
             val connectivityManager =
                 context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
             connectivityManager.let {
                 val builder = NetworkRequest.Builder()
-                it.registerNetworkCallback(
-                    builder.build(),
-                    object : ConnectivityManager.NetworkCallback() {
-                        override fun onAvailable(network: Network) {
-                            Log.d(this@NetworkChecker.toString(), "onAvailable called")
-                            isConnected = true
-                            subscribers.forEach { subscriber -> subscriber.onNetworkStateChanged() }
-                            super.onAvailable(network)
-                        }
-
-                        override fun onLost(network: Network) {
-                            Log.d(this@NetworkChecker.toString(), "onLost called")
-                            isConnected = false
-                            super.onLost(network)
-                        }
-
-                        override fun onUnavailable() {
-                            Log.d(this@NetworkChecker.toString(), "onUnavailable called")
-                            isConnected = false
-                            super.onUnavailable()
-                        }
-                    }
-                )
+                it.registerNetworkCallback(builder.build(), networkCallback)
             }
 
         } catch (e: Exception) {
-            Log.d(this@NetworkChecker.toString(), "exception in NetworkChecker.start")
+            Log.d(this@NetworkChecker.toString(), "exception in NetworkChecker.startNetworkChecker")
         }
     }
 
-//    fun stopNetworkChecker(context: Context) {
-//        val connectivityManager =
-//            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-//        connectivityManager.unregisterNetworkCallback(networkCallback)
-//    }
+    fun stopNetworkChecker(context: Context) {
+        val connectivityManager =
+            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        connectivityManager.unregisterNetworkCallback(networkCallback)
+    }
 }

@@ -25,9 +25,8 @@ class MoviesListFragment : Fragment(R.layout.fragment_movies_list),
     private val exceptionHandler = CoroutineExceptionHandler { coroutineContext, exception ->
         Log.d(this.toString(), "CoroutineExceptionHandler got $exception in $coroutineContext")
     }
-    private val job = Job()
     private val scope: CoroutineScope = CoroutineScope(
-        Dispatchers.Main + job + exceptionHandler
+        Dispatchers.Main + exceptionHandler
     )
     private lateinit var jobUpdateData: Job
     private var movies: List<Movie> = listOf()
@@ -103,11 +102,6 @@ class MoviesListFragment : Fragment(R.layout.fragment_movies_list),
     override fun onDestroyView() {
         _binding = null
         jobUpdateData.cancel()
-        //TODO
-        Log.d("myTag", "onDestroyView called")
-//        scope.cancel()
-//        job.cancel()
-//        jobUpdateData.cancel()
         NetworkChecker.removeSubscriber(this)
         super.onDestroyView()
     }

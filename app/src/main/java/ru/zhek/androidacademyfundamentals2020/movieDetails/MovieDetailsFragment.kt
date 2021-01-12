@@ -21,9 +21,8 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
     private val exceptionHandler = CoroutineExceptionHandler { coroutineContext, exception ->
         Log.d(this.toString(), "CoroutineExceptionHandler got $exception in $coroutineContext")
     }
-    private val job = Job()
     private val scope: CoroutineScope = CoroutineScope(
-        Dispatchers.Main + job + exceptionHandler
+        Dispatchers.Main + exceptionHandler
     )
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

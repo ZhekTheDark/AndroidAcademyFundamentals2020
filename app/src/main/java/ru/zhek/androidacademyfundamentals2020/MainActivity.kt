@@ -20,7 +20,15 @@ class MainActivity : AppCompatActivity() {
                 )
                 .commit()
         }
+    }
 
+    override fun onStart() {
+        super.onStart()
         NetworkChecker.startNetworkChecker(applicationContext)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        NetworkChecker.stopNetworkChecker(applicationContext)
     }
 }
