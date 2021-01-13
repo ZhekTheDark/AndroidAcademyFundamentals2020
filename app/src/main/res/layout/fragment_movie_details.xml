@@ -168,6 +168,7 @@
             android:textColor="@color/heading"
             android:textSize="@dimen/movie_details_text_size"
             android:textStyle="bold"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"

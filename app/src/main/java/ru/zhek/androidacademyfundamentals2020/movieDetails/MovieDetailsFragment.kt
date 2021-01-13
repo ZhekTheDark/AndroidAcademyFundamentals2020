@@ -1,64 +1,78 @@
 package ru.zhek.androidacademyfundamentals2020.movieDetails
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.bumptech.glide.Glide
+import kotlinx.coroutines.*
 import ru.zhek.androidacademyfundamentals2020.R
-import ru.zhek.androidacademyfundamentals2020.data.MoviesDataSource
-import ru.zhek.androidacademyfundamentals2020.data.models.Movie
+import ru.zhek.androidacademyfundamentals2020.data.Movie
+import ru.zhek.androidacademyfundamentals2020.data.loadMovies
 import ru.zhek.androidacademyfundamentals2020.databinding.FragmentMovieDetailsBinding
+import kotlin.math.round
 
 class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
 
     private var _binding: FragmentMovieDetailsBinding? = null
     private val binding get() = _binding!!
+    private val exceptionHandler = CoroutineExceptionHandler { coroutineContext, exception ->
+        Log.d(this.toString(), "CoroutineExceptionHandler got $exception in $coroutineContext")
+    }
+    private val scope: CoroutineScope = CoroutineScope(
+        Dispatchers.Main + exceptionHandler
+    )
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentMovieDetailsBinding.bind(view)
 
-        val movieId = arguments?.getInt(MOVIE_ID_FLAG) ?: MoviesDataSource().getFilms().first().id
-        val movie: Movie = obtainMovie(movieId)
+        val movieId = arguments!!.getInt(MOVIE_ID_FLAG)
 
-        fillViews(movie)
-
-        initListComponent(movie)
+        scope.launch {
+            val movie = obtainMovie(movieId)
+            fillViews(movie)
+            if (movie.actors.isNotEmpty()) initListComponent(movie)
+        }
 
         binding.tvBack.setOnClickListener {
             activity?.supportFragmentManager?.popBackStack()
         }
     }
 
-    private fun obtainMovie(id: Int): Movie {
-        return MoviesDataSource().getFilms().find { it.id == id }!!
+    private suspend fun obtainMovie(id: Int): Movie {
+        val movies = loadMovies(requireContext())
+        return movies.find { it.id == id }!!
     }
 
     private fun fillViews(movie: Movie) {
         binding.apply {
-            tvPg.text = getString(R.string.pg, movie.pg)
-            tvName.text = movie.name
-            tvGenres.text = movie.genres
-            ratingBar.rating = movie.rating.toFloat()
+            tvPg.text = getString(R.string.pg, movie.minimumAge)
+            tvName.text = movie.title
+            tvGenres.text = movie.genres.joinToString { it.name }
+            ratingBar.rating = round(movie.ratings) / 2
             tvReviews.text =
-                resources.getQuantityString(R.plurals.reviews, movie.reviews, movie.reviews)
-            tvStorylineText.text = movie.storyline
+                resources.getQuantityString(
+                    R.plurals.reviews,
+                    movie.numberOfRatings,
+                    movie.numberOfRatings
+                )
+            tvStorylineText.text = movie.overview
             Glide.with(requireContext())
-                .load(movie.backposter)
-                .centerInside()
+                .load(movie.backdrop)
+                .fitCenter()
                 .into(ivBackposter)
         }
     }
 
     private fun initListComponent(movie: Movie) {
+        binding.tvActor.visibility = View.VISIBLE
         binding.rvActors.apply {
             setHasFixedSize(true)
 
-            adapter = ActorAdapter(
-                movie.castList.shuffled()
-            )
+            adapter = ActorAdapter(movie.actors)
 
             val horizontalDecorator =
                 DividerItemDecoration(context, DividerItemDecoration.HORIZONTAL).apply {
@@ -75,6 +89,7 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
 
     override fun onDestroyView() {
         _binding = null
+        scope.cancel()
         super.onDestroyView()
     }
 

@@ -1,18 +1,15 @@
 package ru.zhek.androidacademyfundamentals2020.moviesList
 
-import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import androidx.annotation.ColorRes
-import androidx.core.content.ContextCompat
-import androidx.core.widget.ImageViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import kotlinx.coroutines.*
 import ru.zhek.androidacademyfundamentals2020.R
-import ru.zhek.androidacademyfundamentals2020.data.models.Movie
+import ru.zhek.androidacademyfundamentals2020.data.Movie
 import ru.zhek.androidacademyfundamentals2020.databinding.ViewHolderMovieBinding
+import kotlin.math.round
 
 private const val ITEM_VIEW_TYPE_HEADER = 0
 private const val ITEM_VIEW_TYPE_MOVIE = 1
@@ -23,40 +20,31 @@ class MoviesAdapter(
     private val onClickListener: OnRecyclerItemClicked
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
+
     class MoviesHeaderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
     class MovieViewHolder(private var binding: ViewHolderMovieBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(movie: Movie) {
             binding.apply {
-                tvName.text = movie.name
-                fillImage(movie.kinoposter, ivKinoposter)
-                tvPg.text = root.resources.getString(R.string.pg, movie.pg)
-                tvGenres.text = movie.genres
-                ratingBar.rating = movie.rating.toFloat()
+                tvName.text = movie.title
+                Glide.with(root)
+                    .load(movie.poster)
+                    .placeholder(R.drawable.loading_animation)
+                    .into(ivKinoposter)
+                tvPg.text = root.resources.getString(R.string.pg, movie.minimumAge)
+                tvGenres.text = movie.genres.joinToString { it.name }
+                ratingBar.rating = round(movie.ratings) / 2
                 tvReviews.text = this@MovieViewHolder.itemView.context.resources.getQuantityString(
-//                tvReviews.text = root.resources.getQuantityString(
                     R.plurals.reviews,
-                    movie.reviews,
-                    movie.reviews
+                    movie.numberOfRatings,
+                    movie.numberOfRatings
                 )
-                tvDuration.text = root.resources.getString(R.string.duration, movie.duration)
-                fillImage(R.drawable.like, ivLike)
-                if (movie.liked) {
-                    ivLike.setTint(R.color.tag)
-                } else {
-                    ivLike.setTint(R.color.white)
-                }
+                tvDuration.text = root.resources.getString(R.string.duration, movie.runtime)
+                Glide.with(root)
+                    .load(R.drawable.like)
+                    .into(ivLike)
             }
-        }
-
-        private fun ViewHolderMovieBinding.fillImage(
-            resource: Int,
-            viewId: ImageView
-        ) {
-            Glide.with(root)
-                .load(resource)
-                .into(viewId)
         }
     }
 
@@ -113,11 +101,4 @@ class MoviesAdapter(
     companion object {
         const val HEADER_POSITION = 0
     }
-}
-
-fun ImageView.setTint(@ColorRes colorRes: Int) {
-    ImageViewCompat.setImageTintList(
-        this,
-        ColorStateList.valueOf(ContextCompat.getColor(context, colorRes))
-    )
 }

@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import ru.zhek.androidacademyfundamentals2020.data.models.Actor
+import ru.zhek.androidacademyfundamentals2020.data.Actor
 import ru.zhek.androidacademyfundamentals2020.databinding.ViewHolderActorBinding
 
 class ActorAdapter(private val actors: List<Actor>) :
@@ -16,7 +16,7 @@ class ActorAdapter(private val actors: List<Actor>) :
         fun bind(actor: Actor) {
             binding.apply {
                 Glide.with(root)
-                    .load(actor.image)
+                    .load(actor.picture)
                     .centerCrop()
                     .into(ivActor)
                 ivActor.contentDescription = actor.name

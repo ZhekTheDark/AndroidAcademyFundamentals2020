@@ -19,4 +19,5 @@
         <item quantity="other">%d reviews</item>
     </plurals>
     <string name="duration">%1$d min</string>
+    <string name="internet_error">Internet error</string>
 </resources>
