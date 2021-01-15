@@ -17,7 +17,7 @@
             android:layout_height="@dimen/vh_actor_width"
             android:contentDescription="@string/cast"
             app:shapeAppearanceOverlay="@style/roundedImageView4dp"
-            tools:srcCompat="@drawable/robert_downey_jr" />
+            tools:srcCompat="@drawable/scarlett_johansson" />
 
         <TextView
             android:id="@+id/tv_actor"
