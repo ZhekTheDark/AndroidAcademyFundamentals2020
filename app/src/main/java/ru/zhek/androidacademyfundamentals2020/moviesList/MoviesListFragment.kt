@@ -74,6 +74,7 @@ class MoviesListFragment : Fragment(R.layout.fragment_movies_list),
         }
     }
 
+    //TODO transfer to viewModel?
     private suspend fun fetchData(context: Context) {
         movies = loadMovies(context)
     }
@@ -106,6 +107,7 @@ class MoviesListFragment : Fragment(R.layout.fragment_movies_list),
         super.onDestroyView()
     }
 
+    //TODO transfer to viewModel?
     override fun onNetworkStateChanged() {
         activity?.runOnUiThread {
             drawUI()

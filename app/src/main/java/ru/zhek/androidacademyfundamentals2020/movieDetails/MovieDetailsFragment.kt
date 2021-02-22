@@ -42,6 +42,7 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
         }
     }
 
+    //TODO transfer to viewModel?
     private suspend fun obtainMovie(id: Int): Movie {
         val movies = loadMovies(requireContext())
         return movies.find { it.id == id }!!
